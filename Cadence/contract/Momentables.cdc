@@ -172,7 +172,7 @@ pub contract Momentables: NonFungibleToken {
 		// and deposit it in the recipients collection using their collection reference
         //
 		pub fun mintNFT(recipient: &{NonFungibleToken.CollectionPublic}, momentableId: String, metadata:{String:AnyStruct}, royality:Royality) {
-            emit Minted(id: Momentables.totalSupply, momentableId: momentableId, metadata: metadata)
+            emit Minted(id: Momentables.totalSupply, momentableId: momentableId)
 
 			// deposit it in the recipient's account using their reference
 			recipient.deposit(token: <-create Momentables.NFT(initID: Momentables.totalSupply, initMomentableId: momentableId, metadata: metadata, royality:royality))

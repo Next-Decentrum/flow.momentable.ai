@@ -1,7 +1,7 @@
 import NonFungibleToken from 0x631e88ae7f1d7c20
 import Momentables from 0xa5bb5acbf4dd8848
 
-transaction(recipient: Address, momentableId: String, metadata: {String:AnyStruct}) {
+transaction(recipient: Address, momentableId: String, metadata: {String:AnyStruct}, royality:Momentables.Royality) {
     
     // local variable for storing the minter reference
     let minter: &Momentables.NFTMinter
@@ -26,6 +26,6 @@ transaction(recipient: Address, momentableId: String, metadata: {String:AnyStruc
             ?? panic("Could not get receiver reference to the NFT Collection")
 
         // mint the NFT and deposit it to the recipient's collection
-        self.minter.mintNFT(recipient: receiver, momentableId: momentableId, metadata: metadata)
+        self.minter.mintNFT(recipient: receiver, momentableId: momentableId, metadata: metadata, royality:royality)
     }
 }
