@@ -65,7 +65,7 @@ pub contract MomentablesV1: NonFungibleToken {
         // The token's type, e.g. 3 == Hat
         pub let momentableId: String
         // The token's metadata
-        pub let metadata: {String : AnyStruct}
+        pub let metadata: {String : String}
 
         pub let creator: Creator
 
@@ -73,7 +73,7 @@ pub contract MomentablesV1: NonFungibleToken {
         pub let collaborators : [Collaborator]
         // initializer
         //
-        init(initID: UInt64, initMomentableId: String, metadata:{String : AnyStruct},creator:Creator, collaborators:[Collaborator]) {
+        init(initID: UInt64, initMomentableId: String, metadata:{String : String},creator:Creator, collaborators:[Collaborator]) {
             self.id = initID
             self.momentableId = initMomentableId
             self.metadata = metadata
@@ -194,7 +194,7 @@ pub contract MomentablesV1: NonFungibleToken {
         // Mints a new NFT with a new ID
 		// and deposit it in the recipients collection using their collection reference
         //
-		pub fun mintNFT(recipient: &{NonFungibleToken.CollectionPublic}, momentableId: String, metadata:{String:AnyStruct}, creator:Creator, collaborators:[Collaborator]) {
+		pub fun mintNFT(recipient: &{NonFungibleToken.CollectionPublic}, momentableId: String, metadata:{String:String}, creator:Creator, collaborators:[Collaborator]) {
             emit Minted(id: MomentablesV1.totalSupply, momentableId: momentableId)
 
 			// deposit it in the recipient's account using their reference

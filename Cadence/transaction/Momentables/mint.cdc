@@ -1,5 +1,5 @@
 import NonFungibleToken from 0x631e88ae7f1d7c20
-import MomentablesV1 from 0xa5bb5acbf4dd8848
+import MomentablesV2 from 0xa5bb5acbf4dd8848
 
 
 // This transction uses the NFTMinter resource to mint a new NFT.
@@ -7,14 +7,14 @@ import MomentablesV1 from 0xa5bb5acbf4dd8848
 // It must be run with the account that has the minter resource
 // stored at path /storage/NFTMinter.
 
-transaction(recipient: Address, momentableId: String, metadata: {String:AnyStruct},creator:MomentablesV1.Creator, collaborators:[MomentablesV1.Collaborator]) {
+transaction(recipient: Address, momentableId: String, metadata: {String:String},creator:MomentablesV2.Creator, collaborators:[MomentablesV2.Collaborator]) {
     
     // local variable for storing the minter reference
-    let minter: &MomentablesV1.NFTMinter
+    let minter: &MomentablesV2.NFTMinter
 
     prepare(signer: AuthAccount) {
         // borrow a reference to the NFTMinter resource in storage
-        self.minter = signer.borrow<&MomentablesV1.NFTMinter>(from: MomentablesV1.MinterStoragePath)
+        self.minter = signer.borrow<&MomentablesV2.NFTMinter>(from: MomentablesV2.MinterStoragePath)
             ?? panic("Could not borrow a reference to the NFT minter")
     }
 
@@ -24,7 +24,7 @@ transaction(recipient: Address, momentableId: String, metadata: {String:AnyStruc
 
         // borrow the recipient's public NFT collection reference
         let receiver = recipient
-            .getCapability(MomentablesV1.CollectionPublicPath)
+            .getCapability(MomentablesV2.CollectionPublicPath)
             .borrow<&{NonFungibleToken.CollectionPublic}>()
             ?? panic("Could not get receiver reference to the NFT Collection")
 
