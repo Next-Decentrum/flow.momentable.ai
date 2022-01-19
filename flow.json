@@ -1,6 +1,6 @@
 {
 	"contracts": {
-		"Momentables": "./Cadence/contract/Momentables.cdc",
+		"MomentablesV1": "./Cadence/contract/MomentablesV1.cdc",
 		"FlowToken": {
 			"source":"./Cadence/contract/FlowToken.cdc",
 			"aliases": {
@@ -58,7 +58,7 @@
 	},
 	"deployments": {
 		"testnet": {
-			"testnet-account":["NFTStorefront"]
+			"testnet-account":["MomentablesV1"]
 		}
 	}
 }

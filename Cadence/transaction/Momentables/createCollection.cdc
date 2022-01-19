@@ -1,15 +1,15 @@
 import NonFungibleToken from 0x631e88ae7f1d7c20
-import Momentables from 0xa5bb5acbf4dd8848
+import MomentablesV1 from 0xa5bb5acbf4dd8848
 
 
 transaction {
     prepare(signer: AuthAccount) {
 
-        if signer.borrow<&Momentables.Collection>(from: /storage/MomentablesCollection) == nil {
+        if signer.borrow<&MomentablesV1.Collection>(from: MomentablesV1.CollectionStoragePath) == nil {
 
-            let collection <- Momentables.createEmptyCollection()
-            signer.save(<-collection, to: /storage/MomentablesCollection)
-            signer.link<&Momentables.Collection{NonFungibleToken.CollectionPublic, Momentables.MomentablesCollectionPublic}>(/public/MomentablesCollection, target: /storage/MomentablesCollection)
+            let collection <- MomentablesV1.createEmptyCollection()
+            signer.save(<-collection, to: MomentablesV1.CollectionStoragePath)
+            signer.link<&MomentablesV1.Collection{NonFungibleToken.CollectionPublic, MomentablesV1.MomentablesV1CollectionPublic}>(MomentablesV1.CollectionPublicPath, target: MomentablesV1.CollectionStoragePath)
             log("collection created")
         }
     }
