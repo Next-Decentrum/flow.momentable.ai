@@ -18,3 +18,6 @@ flow scripts execute --network=testnet --signer=testnet-account ./Cadence/transa
 
 ## transfer flow token to another account
 flow transactions send --network=testnet --signer=testnet-account ./Cadence/transaction/FlowToken/transfer_tokens.cdc --arg Address: 0xabc
+
+## update contract
+flow accounts update-contract --network=testnet --signer=testnet-account Momentables ./Cadence/contract/Momentables.cdc

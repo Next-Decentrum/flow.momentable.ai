@@ -1,4 +1,5 @@
 import NonFungibleToken from 0x631e88ae7f1d7c20
+import FungibleToken from 0x9a0766d93b6608b7
 
 // MomentablesV1
 // NFT items for MomentablesV1!
@@ -28,12 +29,12 @@ pub contract MomentablesV1: NonFungibleToken {
     //
 
     pub struct Royalty {
-        pub let receiverAddress: Address
-        pub var value: UFix64
+        pub let wallet: Capability<&{FungibleToken.Receiver}> 
+        pub var cut: UFix64
 
-        init(receiverAddress:Address, value:UFix64) {
-            self.receiverAddress = receiverAddress
-            self.value = value
+        init(wallet:Capability<&{FungibleToken.Receiver}>, cut:UFix64) {
+            self.wallet = wallet
+            self.cut = cut
         }
     }
 
@@ -194,11 +195,11 @@ pub contract MomentablesV1: NonFungibleToken {
         // Mints a new NFT with a new ID
 		// and deposit it in the recipients collection using their collection reference
         //
-		pub fun mintNFT(recipient: &{NonFungibleToken.CollectionPublic}, momentableId: String, metadata:{String:String}, creator:Creator, collaborators:[Collaborator]) {
+		pub fun mintNFT(recipient: &{NonFungibleToken.CollectionPublic}, momentableId: String, metadata:{String:String}, creator: Creator, collaborators: [Collaborator]){
             emit Minted(id: MomentablesV1.totalSupply, momentableId: momentableId)
 
 			// deposit it in the recipient's account using their reference
-			recipient.deposit(token: <-create MomentablesV1.NFT(initID: MomentablesV1.totalSupply, initMomentableId: momentableId, metadata: metadata,creator: creator, collaborators:collaborators))
+			recipient.deposit(token: <-create MomentablesV1.NFT(initID: MomentablesV1.totalSupply, initMomentableId: momentableId, metadata: metadata, creator: creator, collaborators:collaborators))
 
             MomentablesV1.totalSupply = MomentablesV1.totalSupply + (1 as UInt64)
 		}

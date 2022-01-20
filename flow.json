@@ -36,23 +36,33 @@
 	},
 	"accounts": {
 		"testnet-account": {
-            "address": "0xa5bb5acbf4dd8848",
+            "address": "0x405f20c171a2023a",
             "key": {
                 "type": "hex",
                 "index": 0,
                 "signatureAlgorithm": "ECDSA_P256",
                 "hashAlgorithm": "SHA3_256",
-                "privateKey": "e6a1819471085bf150f3774c1aee410f518273aee00a745d4a7b8f1c66963050"
+                "privateKey": "b11d0ccc10b6c98597a34805c2fc6f5f72892777f42787e37d394d7cee152fb4"
             }
         },
 		"testnet-account1": {
-            "address": "0x4f63c8c3cfe3a424",
+            "address": "0xbbd7a5e25771f977",
             "key": {
                 "type": "hex",
                 "index": 0,
                 "signatureAlgorithm": "ECDSA_P256",
                 "hashAlgorithm": "SHA3_256",
-                "privateKey": "efd86d59a05e240b31b32ee5a36b8d1bc84ddb7d3c83a5845bd7ea63a637adc5"
+                "privateKey": "81a785017bc089047d11a0bb0d637556778a4838c103809b40fc68551c7a1752"
+            }
+        },
+		"testnet-account2": {
+            "address": "0x549a2ea68a0e8781",
+            "key": {
+                "type": "hex",
+                "index": 0,
+                "signatureAlgorithm": "ECDSA_P256",
+                "hashAlgorithm": "SHA3_256",
+                "privateKey": "de9a5318c7cb8ca79b9c1f636382cee3c4f107ba3739da8502ae77c8b8ccb412"
             }
         }
 	},

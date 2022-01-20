@@ -1,5 +1,5 @@
 import NonFungibleToken from 0x631e88ae7f1d7c20
-import Momentables from 0xa5bb5acbf4dd8848
+import Momentables from 0xbbd7a5e25771f977
 
 pub struct AccountItem {
   pub let itemID: UInt64
@@ -14,7 +14,7 @@ pub struct AccountItem {
   }
 }
 pub fun fetch(address: Address, id: UInt64): AccountItem? {
-  if let col = getAccount(address).getCapability<&Momentables.Collection{NonFungibleToken.CollectionPublic, Momentables.MomentablesCollectionPublic}>(/public/MomentablesCollection).borrow() {
+  if let col = getAccount(address).getCapability<&Momentables.Collection{NonFungibleToken.CollectionPublic, Momentables.MomentablesCollectionPublic}>(Momentables.CollectionPublicPath).borrow() {
     if let item = col.borrowMomentables(id: id) {
       return AccountItem(itemID: id, momentableId: item.momentableId, metadata: item.metadata, owner: address)
     }
