@@ -1,5 +1,6 @@
 import FungibleToken from "./FungibleToken.cdc"
 import NonFungibleToken from "./NonFungibleToken.cdc"
+import MomentablesV1 from "./MomentablesV1.cdc"
 
 // NFTStorefront
 //
@@ -124,6 +125,8 @@ pub contract NFTStorefront {
         pub let salePrice: UFix64
         // This specifies the division of payment between recipients.
         pub let saleCuts: [SaleCut]
+        pub var creatorCut: MomentablesV1.Creator,
+        pub var collaboratorCut: MomentablesV1.Collaborator,
 
         // setToPurchased
         // Irreversibly set this listing as purchased.
@@ -139,6 +142,8 @@ pub contract NFTStorefront {
             nftID: UInt64,
             salePaymentVaultType: Type,
             saleCuts: [SaleCut],
+            creatorCut: MomentablesV1.Creator,
+            collaboratorCut: [MomentablesV1.Collaborator],
             storefrontID: UInt64
         ) {
             self.storefrontID = storefrontID
@@ -150,6 +155,8 @@ pub contract NFTStorefront {
             // Store the cuts
             assert(saleCuts.length > 0, message: "Listing must have at least one payment cut recipient")
             self.saleCuts = saleCuts
+            self.creatorCut = creatorCut
+            self.collaboratorCut = collaboratorCut
 
             // Calculate the total price from the cuts
             var salePrice = 0.0
@@ -162,10 +169,18 @@ pub contract NFTStorefront {
                 // Add the cut amount to the total price
                 salePrice = salePrice + cut.amount
             }
+            
+
+            let creatorValue =  MomentablesV1.Creator
+            let creatorRoyaltyValue = creatorValue.Royalty.cut
+
+            let collaboratorValue = MomentablesV1.Collaborator
+            let collaboratorRoyaltyValue = collaboratorValue.Royalty.cut
+
             assert(salePrice > 0.0, message: "Listing must have non-zero price")
 
             // Store the calculated sale price
-            self.salePrice = salePrice
+            self.salePrice = salePrice + creatorRoyaltyValue + collaboratorRoyaltyValue
         }
     }
 
@@ -260,6 +275,26 @@ pub contract NFTStorefront {
 
             // Pay each beneficiary their amount of the payment.
             for cut in self.details.saleCuts {
+                if let receiver = cut.receiver.borrow() {
+                   let paymentCut <- payment.withdraw(amount: cut.amount)
+                    receiver.deposit(from: <-paymentCut)
+                    if (residualReceiver == nil) {
+                        residualReceiver = receiver
+                    }
+                }
+            }
+
+            for cut in self.details.creatorCut {
+                if let receiver = cut.receiver.borrow() {
+                   let paymentCut <- payment.withdraw(amount: cut.amount)
+                    receiver.deposit(from: <-paymentCut)
+                    if (residualReceiver == nil) {
+                        residualReceiver = receiver
+                    }
+                }
+            }
+
+            for cut in self.details.collaboratorCut {
                 if let receiver = cut.receiver.borrow() {
                    let paymentCut <- payment.withdraw(amount: cut.amount)
                     receiver.deposit(from: <-paymentCut)
@@ -385,7 +420,8 @@ pub contract NFTStorefront {
             nftType: Type,
             nftID: UInt64,
             salePaymentVaultType: Type,
-            saleCuts: [SaleCut]
+            saleCuts: [SaleCut],
+            
          ): UInt64 {
             let listing <- create Listing(
                 nftProviderCapability: nftProviderCapability,
