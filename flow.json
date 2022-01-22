@@ -1,74 +1,105 @@
 {
-	"contracts": {
-		"MomentablesV1": "./Cadence/contract/MomentablesV1.cdc",
-		"FlowToken": {
-			"source":"./Cadence/contract/FlowToken.cdc",
-			"aliases": {
-				"testnet":"0x7e60df042a9c0868",
-				"mainnet":"0x1654653399040a61"
-			}
-		},
-		"NFTStorefront": {
-			"source":"./Cadence/contract/NFTStorefront.cdc",
-			"aliases": {
-				"testnet":"0x94b06cfca1d8a476",
-				"mainnet":"0x4eb8a10cb9f87357"
-			}
-		},
-		"NonFungibleToken": {
-			"source":"./Cadence/contract/NonFungibleToken.cdc",
-			"aliases": {
-				"testnet":"0x631e88ae7f1d7c20",
-				"mainnet": "0x1d7e57aa55817448"
-			}
-		},
-		"FungibleToken": {
-            "source": "./Cadence/contract/FungibleToken.cdc",
-            "aliases": {
-                "testnet": "0x9a0766d93b6608b7",
-                "mainnet": "0xf233dcee88fe0abe"
-            }
-        }
-	},
-	"networks": {
-		"mainnet": "access.mainnet.nodes.onflow.org:9000",
-		"testnet": "access.devnet.nodes.onflow.org:9000"
-	},
-	"accounts": {
-		"testnet-account": {
-            "address": "0x405f20c171a2023a",
-            "key": {
-                "type": "hex",
-                "index": 0,
-                "signatureAlgorithm": "ECDSA_P256",
-                "hashAlgorithm": "SHA3_256",
-                "privateKey": "b11d0ccc10b6c98597a34805c2fc6f5f72892777f42787e37d394d7cee152fb4"
-            }
-        },
-		"testnet-account1": {
-            "address": "0xbbd7a5e25771f977",
-            "key": {
-                "type": "hex",
-                "index": 0,
-                "signatureAlgorithm": "ECDSA_P256",
-                "hashAlgorithm": "SHA3_256",
-                "privateKey": "81a785017bc089047d11a0bb0d637556778a4838c103809b40fc68551c7a1752"
-            }
-        },
-		"testnet-account2": {
-            "address": "0x549a2ea68a0e8781",
-            "key": {
-                "type": "hex",
-                "index": 0,
-                "signatureAlgorithm": "ECDSA_P256",
-                "hashAlgorithm": "SHA3_256",
-                "privateKey": "de9a5318c7cb8ca79b9c1f636382cee3c4f107ba3739da8502ae77c8b8ccb412"
-            }
-        }
-	},
-	"deployments": {
-		"testnet": {
-			"testnet-account":["MomentablesV1"]
-		}
-	}
+  "emulators": {
+    "default": {
+      "port": 3569,
+      "serviceAccount": "emulator-account"
+    }
+  },
+  "contracts": {
+    "FlowToken": {
+      "source": "./cadence/contracts/standard/FlowToken.cdc",
+      "aliases": {
+        "emulator": "0xf8d6e0586b0a20c7",
+        "testnet": "0x7e60df042a9c0868",
+        "mainnet": "0x1654653399040a61"
+      }
+    },
+    "FUSD": {
+      "source": "./cadence/contracts/standard/FUSD.cdc",
+      "aliases": {
+        "testnet": "0xe223d8a629e49c68",
+        "mainnet": "0x3c5959b568896393"
+      }
+    },
+    "NonFungibleToken": {
+      "source": "./cadence/contracts/standard/NonFungibleToken.cdc",
+      "aliases": {
+        "emulator": "0xf8d6e0586b0a20c7",
+        "testnet": "0x631e88ae7f1d7c20",
+        "mainnet": "0x1d7e57aa55817448"
+      }
+    },
+    "FungibleToken": {
+      "source": "./cadence/contracts/standard/FungibleToken.cdc",
+      "aliases": {
+        "emulator": "0xf8d6e0586b0a20c7",
+        "testnet": "0x9a0766d93b6608b7",
+        "mainnet": "0xf233dcee88fe0abe"
+      }
+    },
+    "NFTStorefront": {
+      "source": "./cadence/contracts/NFTStorefront.cdc",
+      "aliases": {
+        "emulator": "0xf8d6e0586b0a20c7",
+        "testnet": "0x7e60df042a9c0868"
+      }
+    },
+    "Momentables": {
+      "source": "./cadence/contracts/Momentables.cdc",
+      "aliases": {
+        "emulator": "0xf8d6e0586b0a20c7",
+        "testnet": "0x7e60df042a9c0868"
+      }
+    }
+  },
+  "networks": {
+    "emulator": "127.0.0.1:3569",
+    "testnet": "access.devnet.nodes.onflow.org:9000",
+    "mainnet": "access.mainnet.nodes.onflow.org:9000"
+  },
+  "accounts": {
+    "emulator-account": {
+      "address": "f8d6e0586b0a20c7",
+      "keys": "680fa28962650ef346a7edf23d63967b0fcf44958488d0d48f8539ece6e92eba"
+    },
+    "emulator-account1": {
+      "address": "0x01cf0e2f2f715450",
+      "keys": "c34747ea4c941c15a653423262fd18e47de20576b10535e52a7a80a088b58c7a"
+    },
+    "testnet-account": {
+      "address": "0xa5bb5acbf4dd8848",
+      "key": {
+        "type": "hex",
+        "index": 0,
+        "signatureAlgorithm": "ECDSA_P256",
+        "hashAlgorithm": "SHA3_256",
+        "privateKey": "e6a1819471085bf150f3774c1aee410f518273aee00a745d4a7b8f1c66963050"
+      }
+    },
+    "testnet-account1": {
+      "address": "0x4f63c8c3cfe3a424",
+      "key": {
+        "type": "hex",
+        "index": 0,
+        "signatureAlgorithm": "ECDSA_P256",
+        "hashAlgorithm": "SHA3_256",
+        "privateKey": "efd86d59a05e240b31b32ee5a36b8d1bc84ddb7d3c83a5845bd7ea63a637adc5"
+      }
+    }
+  },
+  "deployments": {
+    "emulator": {
+      "emulator-account": [
+        "FUSD",
+        "FlowToken",
+        "NonFungibleToken",
+        "FungibleToken",
+        "Momentables",
+        "NFTStorefront"
+      ]
+    },
+    "testnet": {
+      "testnet-account": ["Momentables", "NFTStorefront"]
+    }
+  }
 }
