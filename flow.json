@@ -41,14 +41,14 @@
       "source": "./cadence/contracts/NFTStorefront.cdc",
       "aliases": {
         "emulator": "0xf8d6e0586b0a20c7",
-        "testnet": "0x7e60df042a9c0868"
+        "testnet": "0x9392d252a3a5e08f"
       }
     },
     "Momentables": {
       "source": "./cadence/contracts/Momentables.cdc",
       "aliases": {
         "emulator": "0xf8d6e0586b0a20c7",
-        "testnet": "0x7e60df042a9c0868"
+        "testnet": "0x9392d252a3a5e08f"
       }
     }
   },
@@ -67,13 +67,13 @@
       "keys": "c34747ea4c941c15a653423262fd18e47de20576b10535e52a7a80a088b58c7a"
     },
     "testnet-account": {
-      "address": "0xa5bb5acbf4dd8848",
+      "address": "0x9392d252a3a5e08f",
       "key": {
         "type": "hex",
         "index": 0,
         "signatureAlgorithm": "ECDSA_P256",
         "hashAlgorithm": "SHA3_256",
-        "privateKey": "e6a1819471085bf150f3774c1aee410f518273aee00a745d4a7b8f1c66963050"
+        "privateKey": "f33024790d5441917b9759ada9317f638a94d81a2abc6f4fdb1c7e04a5484b99"
       }
     },
     "testnet-account1": {

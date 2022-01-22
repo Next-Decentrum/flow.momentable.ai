@@ -1,4 +1,5 @@
 import NonFungibleToken from "./standard/NonFungibleToken.cdc"
+import FungibleToken from "./standard/FungibleToken.cdc"
 
 // Momentables
 // NFT items for Momentables!
@@ -26,10 +27,10 @@ pub contract Momentables: NonFungibleToken {
 
     pub struct Creator{
         pub let creatorName: String
-        pub let creatorAddress: Address
+        pub let creatorAddress:  Capability<&{FungibleToken.Receiver}>
         pub let creatorRoyalty: UFix64
 
-        init(creatorName: String, creatorAddress: Address, creatorRoyalty: UFix64){
+        init(creatorName: String, creatorAddress: Capability<&{FungibleToken.Receiver}>, creatorRoyalty: UFix64){
             self.creatorName = creatorName
             self.creatorAddress = creatorAddress
             self.creatorRoyalty = creatorRoyalty
@@ -38,10 +39,10 @@ pub contract Momentables: NonFungibleToken {
 
       pub struct Collaborator{
         pub let collaboratorName: String
-        pub let collaboratorAddress: Address
+        pub let collaboratorAddress: Capability<&{FungibleToken.Receiver}>
         pub let collaboratorRoyalty: UFix64
 
-        init(collaboratorName: String, collaboratorAddress: Address, collaboratorRoyalty: UFix64){
+        init(collaboratorName: String, collaboratorAddress: Capability<&{FungibleToken.Receiver}>, collaboratorRoyalty: UFix64){
             self.collaboratorName = collaboratorName
             self.collaboratorAddress = collaboratorAddress
             self.collaboratorRoyalty = collaboratorRoyalty
