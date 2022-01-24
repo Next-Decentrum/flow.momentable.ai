@@ -153,7 +153,7 @@ pub contract NFTStorefront {
 
            // Make sure we can borrow the receiver.
            // We will check this again when the token is sold.
-            self.creator.craetorWallet.borrow()
+            self.creator.creatorWallet.borrow()
                     ?? panic("Cannot borrow receiver")
 
             salePrice = salePrice + self.creator.creatorRoyalty

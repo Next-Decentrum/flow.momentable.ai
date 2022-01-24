@@ -1,4 +1,5 @@
-import NonFungibleToken from "./NonFungibleToken.cdc"
+import NonFungibleToken from "./standard/NonFungibleToken.cdc"
+import FungibleToken from "./standard/FungibleToken.cdc"
 import MetadataViews from "./MetadataViews.cdc"
 
 // Momentables
@@ -27,10 +28,10 @@ pub contract Momentables: NonFungibleToken {
 
     pub struct Creator{
         pub let creatorName: String
-        pub let creatorWallet: Capability<&{FungibleToken.Receiver}
+        pub let creatorWallet: Capability<&{FungibleToken.Receiver}>
         pub let creatorRoyalty: UFix64
 
-        init(creatorName: String, creatorWallet: Capability<&{FungibleToken.Receiver}, creatorRoyalty: UFix64){
+        init(creatorName: String, creatorWallet: Capability<&{FungibleToken.Receiver}>, creatorRoyalty: UFix64){
             self.creatorName = creatorName
             self.creatorWallet = creatorWallet
             self.creatorRoyalty = creatorRoyalty
@@ -39,10 +40,10 @@ pub contract Momentables: NonFungibleToken {
 
       pub struct Collaborator{
         pub let collaboratorName: String
-        pub let collaboratorWallet: Capability<&{FungibleToken.Receiver}
+        pub let collaboratorWallet: Capability<&{FungibleToken.Receiver}>
         pub let collaboratorRoyalty: UFix64
 
-        init(collaboratorName: String, collaboratorWallet: Capability<&{FungibleToken.Receiver}, collaboratorRoyalty: UFix64){
+        init(collaboratorName: String, collaboratorWallet: Capability<&{FungibleToken.Receiver}>, collaboratorRoyalty: UFix64){
             self.collaboratorName = collaboratorName
             self.collaboratorWallet = collaboratorWallet
             self.collaboratorRoyalty = collaboratorRoyalty
@@ -263,4 +264,3 @@ pub contract Momentables: NonFungibleToken {
         emit ContractInitialized()
 	}
 }
- 
