@@ -150,11 +150,22 @@ pub contract NFTStorefront {
 
 
             // Calculate the creator royalty payment
+
+           // Make sure we can borrow the receiver.
+           // We will check this again when the token is sold.
+            self.creator.creatorWallet.borrow()
+                    ?? panic("Cannot borrow receiver")
+
             salePrice = salePrice + self.creator.creatorRoyalty
 
 
             // Calculate the collaborators royalty payment
             for collaborator in self.collaborators{
+            // Make sure we can borrow the receiver.
+            // We will check this again when the token is sold.
+            collaborator.collaboratorWallet.borrow()
+                    ?? panic("Cannot borrow receiver")
+
              salePrice = salePrice + collaborator.collaboratorRoyalty
             }
 
@@ -265,7 +276,7 @@ pub contract NFTStorefront {
 
             // Pay each beneficiary their amount of the payment.
 
-             if let receiver = self.details.creator.creatorAddress.borrow() {
+             if let receiver = self.details.creator.creatorWallet.borrow() {
                    let paymentCut <- payment.withdraw(amount: self.details.creator.creatorRoyalty)
                     receiver.deposit(from: <-paymentCut)
                     if (residualReceiver == nil) {
@@ -274,7 +285,7 @@ pub contract NFTStorefront {
            }
 
             for collaborator in self.details.collaborators {
-                if let receiver = collaborator.collaboratorAddress.borrow() {
+                if let receiver = collaborator.collaboratorWallet.borrow() {
                    let paymentCut <- payment.withdraw(amount: collaborator.collaboratorRoyalty)
                     receiver.deposit(from: <-paymentCut)
                     if (residualReceiver == nil) {
