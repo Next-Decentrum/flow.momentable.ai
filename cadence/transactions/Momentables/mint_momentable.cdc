@@ -1,11 +1,13 @@
 import NonFungibleToken from "../../contracts/NonFungibleToken.cdc"
 import Momentables from "../../contracts/Momentables.cdc"
 
-
 transaction(
  recipient: Address,
  momentableId: String,
- metadata: {String:String},
+ name: String,
+ description: String,
+ imageCID: String,
+ traits: {String:{String:String}},
  creatorName: String,
  creatorAddress: Address,
  creatorRoyalty: UFix64,
@@ -51,6 +53,14 @@ transaction(
         }
 
         // mint the NFT and deposit it to the recipient's collection
-        self.minter.mintNFT(recipient: receiver, momentableId: momentableId, metadata: metadata, creator:creatorData , collaborators: collaboratorsData)
+        self.minter.mintNFT(
+            recipient: receiver, 
+            momentableId: momentableId, 
+            name:name,
+            description:description,
+            imageCID:imageCID, 
+            traits: traits, 
+            creator:creatorData , 
+            collaborators: collaboratorsData)
     }
 }
