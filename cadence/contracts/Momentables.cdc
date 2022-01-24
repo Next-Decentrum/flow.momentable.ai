@@ -27,24 +27,24 @@ pub contract Momentables: NonFungibleToken {
 
     pub struct Creator{
         pub let creatorName: String
-        pub let creatorAddress: Address
+        pub let creatorWallet: Capability<&{FungibleToken.Receiver}
         pub let creatorRoyalty: UFix64
 
-        init(creatorName: String, creatorAddress: Address, creatorRoyalty: UFix64){
+        init(creatorName: String, creatorWallet: Capability<&{FungibleToken.Receiver}, creatorRoyalty: UFix64){
             self.creatorName = creatorName
-            self.creatorAddress = creatorAddress
+            self.creatorWallet = creatorWallet
             self.creatorRoyalty = creatorRoyalty
         }
     }
 
       pub struct Collaborator{
         pub let collaboratorName: String
-        pub let collaboratorAddress: Address
+        pub let collaboratorWallet: Capability<&{FungibleToken.Receiver}
         pub let collaboratorRoyalty: UFix64
 
-        init(collaboratorName: String, collaboratorAddress: Address, collaboratorRoyalty: UFix64){
+        init(collaboratorName: String, collaboratorWallet: Capability<&{FungibleToken.Receiver}, collaboratorRoyalty: UFix64){
             self.collaboratorName = collaboratorName
-            self.collaboratorAddress = collaboratorAddress
+            self.collaboratorWallet = collaboratorWallet
             self.collaboratorRoyalty = collaboratorRoyalty
         }
     }
