@@ -1,5 +1,5 @@
-import NonFungibleToken from "./standard/NonFungibleToken.cdc"
-import FungibleToken from "./standard/FungibleToken.cdc"
+import NonFungibleToken from "./NonFungibleToken.cdc"
+import FungibleToken from "./FungibleToken.cdc"
 import MetadataViews from "./MetadataViews.cdc"
 
 // Momentables
@@ -86,12 +86,22 @@ pub contract Momentables: NonFungibleToken {
 
          pub fun getViews(): [Type] {
             return [
+                Type<MetadataViews.Display>(),
                 Type<MetadataViews.MomentableView>()
             ]
         }
 
         pub fun resolveView(_ view: Type): AnyStruct? {
             switch view {
+                case Type<MetadataViews.Display>():
+                    return MetadataViews.Display(
+                        name: self.name,
+                        description: self.description,
+                        thumbnail: MetadataViews.IPFSFile(
+                            cid: self.imageCID, 
+                            path: "sm.png"
+                        )
+                    )
                 case Type<MetadataViews.MomentableView>():
                     return MetadataViews.MomentableView(
                         name: self.name,

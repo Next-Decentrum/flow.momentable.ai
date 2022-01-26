@@ -1,6 +1,6 @@
-import NonFungibleToken from "../../contracts/standard/NonFungibleToken.cdc"
-import FungibleToken from "../../contracts/standard/FungibleToken.cdc"
-import FlowToken from "../../contracts/standard/FUSD.cdc"
+import NonFungibleToken from "../../contracts/NonFungibleToken.cdc"
+import FungibleToken from "../../contracts/FungibleToken.cdc"
+import FlowToken from "../../contracts/FlowToken.cdc"
 
 import Momentables from "../../contracts/Momentables.cdc"
 import NFTStorefront from "../../contracts/NFTStorefront.cdc"

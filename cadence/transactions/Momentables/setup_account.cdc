@@ -1,4 +1,4 @@
-import NonFungibleToken from "../../contracts/standard/NonFungibleToken.cdc"
+import NonFungibleToken from "../../contracts/NonFungibleToken.cdc"
 import Momentables from "../../contracts/Momentables.cdc"
 
 // This transaction configures an account to hold Momentables.

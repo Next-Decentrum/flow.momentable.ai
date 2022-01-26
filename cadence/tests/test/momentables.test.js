@@ -18,14 +18,16 @@ import {
   setupMomentablesOnAccount,
   transferMomentable,
 } from '../src/Momentables';
+import { arg } from '@onflow/fcl';
+import * as t from '@onflow/types';
 
 // We need to set timeout for a higher number, because some transactions might take up some time
 jest.setTimeout(50000);
 
-const mintArgs = {
-  recepient: 0xf8d6e0586b0a20c7,
+let mintArgs = {
+  recepient: '0x01',
   momentableId: '61d8a32f26beea70ef4ad832',
-  name: 'Edjo',
+  momentableName: 'Edjo',
   description:
     'Each crypto pharaoh is cryptographically unique, programmatically brought to life, endowed with a rare combination of sacred backgrounds, majestic costumes, power neckpieces, healing accessories, magical staffs, immortal tattoos and much more. All Crypto Pharaohs are remarkable, magical, and powerful.Some are rarer than other',
   imageCID: 'QmU351M14k5n5VszC6KXmqMVDnPH8BRWwhW6Suur9bwhtw',
@@ -47,7 +49,7 @@ const mintArgs = {
 };
 
 describe('Momentables', () => {
-  // Instantiate emulator and path to Cadence files
+  // Instantiate emulator and path to Cadence files 0x01cf0e2f2f715450
   beforeEach(async () => {
     const basePath = path.resolve(__dirname, '../../');
     const port = 8080;
@@ -69,12 +71,13 @@ describe('Momentables', () => {
   it('supply should be 0 after contract is deployed', async () => {
     // Setup
     await deployMomentables();
-    const MomentableAdmin = await getMomentablesAdminAddress();
-    await shallPass(setupMomentablesOnAccount(MomentableAdmin));
+    const MomentablesAdmin = await getMomentablesAdminAddress();
+
+    await shallPass(setupMomentablesOnAccount(MomentablesAdmin));
 
     await shallResolve(async () => {
       const supply = await getMomentablesupply();
-      expect(supply).toBe(0);
+      expect(supply[0]).toBe(0);
     });
   });
 
@@ -88,7 +91,7 @@ describe('Momentables', () => {
 
     const recepient = 0xf8d6e0586b0a20c7;
     const momentableId = '61d8a32f26beea70ef4ad832';
-    const name = 'Edjo';
+    const momentableName = 'Edjo';
     const description =
       'Each crypto pharaoh is cryptographically unique, programmatically brought to life, endowed with a rare combination of sacred backgrounds, majestic costumes, power neckpieces, healing accessories, magical staffs, immortal tattoos and much more. All Crypto Pharaohs are remarkable, magical, and powerful.Some are rarer than other';
     const imageCID = 'QmU351M14k5n5VszC6KXmqMVDnPH8BRWwhW6Suur9bwhtw';
@@ -108,7 +111,22 @@ describe('Momentables', () => {
     const collaboratorAddresses = [0x01, 0x02];
     const collaboratorRoyalties = [1.2, 2.4];
 
-    await shallPass(mintMomentable(mintArgs)); //Update with actual params
+    await shallPass(
+      mintMomentable(
+        getAccountAddress('Alice'),
+        momentableId,
+        momentableName,
+        description,
+        imageCID,
+        traits,
+        creatorName,
+        creatorAddress,
+        creatorRoyalty,
+        collaboratorNames,
+        collaboratorAddresses,
+        collaboratorRoyalties
+      )
+    );
   });
 
   it('should be able to create a new empty NFT Collection', async () => {
@@ -120,7 +138,7 @@ describe('Momentables', () => {
     // shall be able te read Alice collection and ensure it's empty
     await shallResolve(async () => {
       const itemCount = await getMomentableCount(Alice);
-      expect(itemCount).toBe(0);
+      expect(itemCount[0]).toBe(0);
     });
   });
 

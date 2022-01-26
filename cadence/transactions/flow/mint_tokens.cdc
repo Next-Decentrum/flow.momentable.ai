@@ -1,5 +1,5 @@
-import FungibleToken from "../../contracts/standard/FungibleToken.cdc"
-import FlowToken from "../../contracts/standard/FlowToken.cdc"
+import FungibleToken from "../../contracts/FungibleToken.cdc"
+import FlowToken from "../../contracts/FlowToken.cdc"
 
 transaction(recipient: Address, amount: UFix64) {
 
@@ -18,7 +18,7 @@ transaction(recipient: Address, amount: UFix64) {
     }
 
     execute {
-        let minter <- self.tokenAdmin.createNewMinter()
+        let minter <- self.tokenAdmin.createNewMinter(allowedAmount: 10.0)
         let mintedVault <- minter.mintTokens(amount: amount)
 
         self.tokenReceiver.deposit(from: <-mintedVault)
