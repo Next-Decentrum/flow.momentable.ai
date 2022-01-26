@@ -84,12 +84,17 @@ describe('Momentables', () => {
   it('should be able to mint a Momentable', async () => {
     // Setup
     await deployMomentables();
+    const MomentablesAdmin = await getMomentablesAdminAddress();
+
     const Alice = await getAccountAddress('Alice');
     await setupMomentablesOnAccount(Alice);
 
+    const Bob = await getAccountAddress('Bob');
+    await setupMomentablesOnAccount(Bob);
+
     // Mint instruction for Alice account shall be resolved
 
-    const recepient = 0xf8d6e0586b0a20c7;
+    const recepient = Alice;
     const momentableId = '61d8a32f26beea70ef4ad832';
     const momentableName = 'Edjo';
     const description =
@@ -105,15 +110,15 @@ describe('Momentables', () => {
       },
     };
     const creatorName = 'Creator-1';
-    const creatorAddress = '0x01cf0e2f2f715450';
+    const creatorAddress = MomentablesAdmin;
     const creatorRoyalty = 2.0;
-    const collaboratorNames = ['Collab-1', 'Collab-2'];
-    const collaboratorAddresses = [0x01, 0x02];
-    const collaboratorRoyalties = [1.2, 2.4];
+    const collaboratorNames = ['Collab-1'];
+    const collaboratorAddresses = [Bob];
+    const collaboratorRoyalties = [2.4];
 
     await shallPass(
       mintMomentable(
-        getAccountAddress('Alice'),
+        recepient,
         momentableId,
         momentableName,
         description,
@@ -156,13 +161,52 @@ describe('Momentables', () => {
 
   it('should be able to withdraw an NFT and deposit to another accounts collection', async () => {
     await deployMomentables();
+    const MomentablesAdmin = await getMomentablesAdminAddress();
+
     const Alice = await getAccountAddress('Alice');
     const Bob = await getAccountAddress('Bob');
     await setupMomentablesOnAccount(Alice);
     await setupMomentablesOnAccount(Bob);
 
     // Mint instruction for Alice account shall be resolved
-    await shallPass(mintMomentable(mintArgs));
+    const recepient = Alice;
+    const momentableId = '61d8a32f26beea70ef4ad832';
+    const momentableName = 'Edjo';
+    const description =
+      'Each crypto pharaoh is cryptographically unique, programmatically brought to life, endowed with a rare combination of sacred backgrounds, majestic costumes, power neckpieces, healing accessories, magical staffs, immortal tattoos and much more. All Crypto Pharaohs are remarkable, magical, and powerful.Some are rarer than other';
+    const imageCID = 'QmU351M14k5n5VszC6KXmqMVDnPH8BRWwhW6Suur9bwhtw';
+    const traits = {
+      'Divine Skin Tone': {
+        rarity: '4.61%',
+        name: 'Brown',
+        primaryPower: 'Constitution 3d8',
+        secondaryPower: 'Strength 3d6',
+        additionalData: 'Nobility',
+      },
+    };
+    const creatorName = 'Creator-1';
+    const creatorAddress = MomentablesAdmin;
+    const creatorRoyalty = 2.0;
+    const collaboratorNames = ['Collab-1'];
+    const collaboratorAddresses = [Bob];
+    const collaboratorRoyalties = [2.4];
+
+    await shallPass(
+      mintMomentable(
+        recepient,
+        momentableId,
+        momentableName,
+        description,
+        imageCID,
+        traits,
+        creatorName,
+        creatorAddress,
+        creatorRoyalty,
+        collaboratorNames,
+        collaboratorAddresses,
+        collaboratorRoyalties
+      )
+    );
 
     // Transfer transaction shall pass
     await shallPass(transferMomentable(Alice, Bob, 0));
