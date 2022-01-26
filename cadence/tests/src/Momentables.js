@@ -121,7 +121,7 @@ export const mintMomentable = async (
  * @returns {Promise<*>}
  * */
 export const transferMomentable = async (sender, recipient, itemId) => {
-  const name = 'Momentables/transfer_Momentable';
+  const name = 'Momentables/transfer_momentable';
   const args = [recipient, itemId];
   const signers = [sender];
 
