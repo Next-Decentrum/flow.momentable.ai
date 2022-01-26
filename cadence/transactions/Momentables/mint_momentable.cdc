@@ -46,7 +46,7 @@ transaction(
         }
 
         let creatorAccount = getAccount(creatorAddress)
-        let creatorWallet = creatorAccount.getCapability<&FlowToken.Vault{FungibleToken.Receiver}>(/public/fusdReciever)!
+        let creatorWallet = creatorAccount.getCapability<&FlowToken.Vault{FungibleToken.Receiver}>(/public/FlowTokenReciever)!
         let creatorData = Momentables.Creator(creatorName: creatorName, creatorWallet: creatorWallet, creatorRoyalty: creatorRoyalty);
         
         let collaboratorsData:[ Momentables.Collaborator] = []
@@ -54,7 +54,7 @@ transaction(
         var index = 0
         while index < collaboratorNames.length{
             let collaboratorAccount = getAccount(collaboratorAddresses[index])
-            let collaboratorWallet = collaboratorAccount.getCapability<&FlowToken.Vault{FungibleToken.Receiver}>(/public/fusdReciever)!
+            let collaboratorWallet = collaboratorAccount.getCapability<&FlowToken.Vault{FungibleToken.Receiver}>(/public/FlowTokenReciever)!
             collaboratorsData.append(Momentables.Collaborator(collaboratorName: collaboratorNames[index], collaboratorAddress: collaboratorWallet, collaboratorRoyalty: collaboratorRoyalties[index])) 
             index = index+1
         }

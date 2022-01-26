@@ -28,10 +28,10 @@ pub contract Momentables: NonFungibleToken {
 
     pub struct Creator{
         pub let creatorName: String
-        pub let creatorWallet: Capability<&{FungibleToken.Receiver}>
+        pub let creatorWallet: Capability<&AnyResource{FungibleToken.Receiver}>
         pub let creatorRoyalty: UFix64
 
-        init(creatorName: String, creatorWallet: Capability<&{FungibleToken.Receiver}>, creatorRoyalty: UFix64){
+        init(creatorName: String, creatorWallet: Capability<&AnyResource{FungibleToken.Receiver}>, creatorRoyalty: UFix64){
             self.creatorName = creatorName
             self.creatorWallet = creatorWallet
             self.creatorRoyalty = creatorRoyalty
@@ -40,10 +40,10 @@ pub contract Momentables: NonFungibleToken {
 
       pub struct Collaborator{
         pub let collaboratorName: String
-        pub let collaboratorWallet: Capability<&{FungibleToken.Receiver}>
+        pub let collaboratorWallet: Capability<&AnyResource{FungibleToken.Receiver}>
         pub let collaboratorRoyalty: UFix64
 
-        init(collaboratorName: String, collaboratorWallet: Capability<&{FungibleToken.Receiver}>, collaboratorRoyalty: UFix64){
+        init(collaboratorName: String, collaboratorWallet: Capability<&AnyResource{FungibleToken.Receiver}>, collaboratorRoyalty: UFix64){
             self.collaboratorName = collaboratorName
             self.collaboratorWallet = collaboratorWallet
             self.collaboratorRoyalty = collaboratorRoyalty
@@ -87,7 +87,7 @@ pub contract Momentables: NonFungibleToken {
          pub fun getViews(): [Type] {
             return [
                 Type<MetadataViews.Display>(),
-                Type<MetadataViews.MomentableView>()
+                Type<MetadataViews.RarityView>()
             ]
         }
 
@@ -99,17 +99,11 @@ pub contract Momentables: NonFungibleToken {
                         description: self.description,
                         thumbnail: MetadataViews.IPFSFile(
                             cid: self.imageCID, 
-                            path: "sm.png"
+                            path: ""
                         )
                     )
-                case Type<MetadataViews.MomentableView>():
-                    return MetadataViews.MomentableView(
-                        name: self.name,
-                        description: self.description,
-                        thumbnail: MetadataViews.IPFSFile(
-                            cid: self.imageCID, 
-                            path: ""
-                        ),
+                case Type<MetadataViews.RarityView>():
+                    return MetadataViews.RarityView(
                         traits: self.traits
                     )
             }

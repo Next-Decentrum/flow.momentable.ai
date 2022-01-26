@@ -7,22 +7,23 @@
   },
   "contracts": {
     "FlowToken": {
-      "source": "./cadence/contracts/standard/FlowToken.cdc",
+      "source": "./cadence/contracts/FlowToken.cdc",
       "aliases": {
-        "emulator": "0xf8d6e0586b0a20c7",
+        "emulator": "0x0ae53cb6e3f42a79",
         "testnet": "0x7e60df042a9c0868",
         "mainnet": "0x1654653399040a61"
       }
     },
     "FUSD": {
-      "source": "./cadence/contracts/standard/FUSD.cdc",
+      "source": "./cadence/contracts/FUSD.cdc",
       "aliases": {
+        "emulator": "0xf8d6e0586b0a20c7",
         "testnet": "0xe223d8a629e49c68",
         "mainnet": "0x3c5959b568896393"
       }
     },
     "NonFungibleToken": {
-      "source": "./cadence/contracts/standard/NonFungibleToken.cdc",
+      "source": "./cadence/contracts/NonFungibleToken.cdc",
       "aliases": {
         "emulator": "0xf8d6e0586b0a20c7",
         "testnet": "0x631e88ae7f1d7c20",
@@ -30,22 +31,23 @@
       }
     },
     "FungibleToken": {
-      "source": "./cadence/contracts/standard/FungibleToken.cdc",
+      "source": "./cadence/contracts/FungibleToken.cdc",
       "aliases": {
-        "emulator": "0xf8d6e0586b0a20c7",
+        "emulator": "0xee82856bf20e2aa6",
         "testnet": "0x9a0766d93b6608b7",
         "mainnet": "0xf233dcee88fe0abe"
       }
     },
-    "MetadataViews": {
-      "source": "./cadence/contracts/MetadataViews.cdc",
-      "aliases": {
-        "emulator": "0xf8d6e0586b0a20c7",
-        "testnet": "0xa67fc618583898ae"
-      }
-    },
     "NFTStorefront": {
       "source": "./cadence/contracts/NFTStorefront.cdc",
+      "aliases": {
+        "emulator": "0xf8d6e0586b0a20c7",
+        "testnet": "0x94b06cfca1d8a476",
+        "mainnet": "0x4eb8a10cb9f87357"
+      }
+    },
+    "MetadataViews": {
+      "source": "./cadence/contracts/MetadataViews.cdc",
       "aliases": {
         "emulator": "0xf8d6e0586b0a20c7",
         "testnet": "0xa67fc618583898ae"
@@ -61,6 +63,7 @@
   },
   "networks": {
     "emulator": "127.0.0.1:3569",
+    "emulator-1": "127.0.0.1:3569",
     "testnet": "access.devnet.nodes.onflow.org:9000",
     "mainnet": "access.mainnet.nodes.onflow.org:9000"
   },
@@ -98,14 +101,14 @@
     "emulator": {
       "emulator-account": [
         "NonFungibleToken",
-        "FungibleToken",
+        "FUSD",
         "MetadataViews",
         "Momentables",
         "NFTStorefront"
       ]
     },
     "testnet": {
-      "testnet-account": ["MetadataViews", "Momentables", "NFTStorefront"]
+      "testnet-account": ["MetadataViews", "Momentables"]
     }
   }
 }
