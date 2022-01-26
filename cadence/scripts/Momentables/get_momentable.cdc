@@ -1,4 +1,5 @@
 import NonFungibleToken from "../../contracts/NonFungibleToken.cdc"
+import FungibleToken from "../../contracts/FungibleToken.cdc"
 import Momentables from "../../contracts/Momentables.cdc"
 import MetadataViews from "../../contracts/MetadataViews.cdc"
 
@@ -13,7 +14,8 @@ pub struct AccountItem {
   pub let momentableId: String
   pub let resourceID: UInt64
   pub let owner: Address
-
+  pub let creatorName: String
+  pub let creatorAddress: Address
 
 
   init(
@@ -24,7 +26,9 @@ pub struct AccountItem {
     itemID: UInt64, 
     momentableId: String, 
     resourceID: UInt64, 
-    owner: Address) {
+    owner: Address,
+    creatorName: String,
+    creatorAddress: Address) {
     self.name = name
     self.description = description
     self.thumbnail = thumbnail
@@ -33,6 +37,8 @@ pub struct AccountItem {
     self.momentableId = momentableId
     self.resourceID = resourceID
     self.owner = owner
+    self.creatorName = creatorName
+    self.creatorAddress = creatorAddress
   }
 }
 
@@ -70,6 +76,8 @@ pub fun main(address: Address, itemID: UInt64): AnyStruct {
                     momentableId: item.momentableId, 
                     resourceID: item.uuid,
                     owner: address,
+                    creatorName: item.creator.creatorName,
+                    creatorAddress: item.creator.creatorWallet.address
                 ) 
           
          }
@@ -83,6 +91,8 @@ pub fun main(address: Address, itemID: UInt64): AnyStruct {
                     momentableId: item.momentableId, 
                     resourceID: item.uuid,
                     owner: address,
+                    creatorName: item.creator.creatorName,
+                    creatorAddress: item.creator.creatorWallet.address
                 ) 
        }
 

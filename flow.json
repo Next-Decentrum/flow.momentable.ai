@@ -50,20 +50,19 @@
       "source": "./cadence/contracts/MetadataViews.cdc",
       "aliases": {
         "emulator": "0xf8d6e0586b0a20c7",
-        "testnet": "0xa67fc618583898ae"
+        "testnet": "0x213e3564fc727242"
       }
     },
     "Momentables": {
       "source": "./cadence/contracts/Momentables.cdc",
       "aliases": {
         "emulator": "0xf8d6e0586b0a20c7",
-        "testnet": "0xa67fc618583898ae"
+        "testnet": "0x213e3564fc727242"
       }
     }
   },
   "networks": {
     "emulator": "127.0.0.1:3569",
-    "emulator-1": "127.0.0.1:3569",
     "testnet": "access.devnet.nodes.onflow.org:9000",
     "mainnet": "access.mainnet.nodes.onflow.org:9000"
   },
@@ -77,23 +76,23 @@
       "keys": "c34747ea4c941c15a653423262fd18e47de20576b10535e52a7a80a088b58c7a"
     },
     "testnet-account": {
-      "address": "0xa67fc618583898ae",
+      "address": "0x213e3564fc727242",
       "key": {
         "type": "hex",
         "index": 0,
         "signatureAlgorithm": "ECDSA_P256",
         "hashAlgorithm": "SHA3_256",
-        "privateKey": "a42f9c900abb1cba0e80f01f9efef362f03beac54d2e5e05952476b28ae176de"
+        "privateKey": "ee55243b1a87f8e7f6a96a64b22a0811af165e41611dac788e6d705959f66f9a"
       }
     },
     "testnet-account1": {
-      "address": "0x4f63c8c3cfe3a424",
+      "address": "0xaebd0976214415a1",
       "key": {
         "type": "hex",
         "index": 0,
         "signatureAlgorithm": "ECDSA_P256",
         "hashAlgorithm": "SHA3_256",
-        "privateKey": "efd86d59a05e240b31b32ee5a36b8d1bc84ddb7d3c83a5845bd7ea63a637adc5"
+        "privateKey": "1f0caba497bb533d1bf23ae8f42c291a62aa8a064c3c1788be310a9348a6b6f6"
       }
     }
   },
