@@ -53,14 +53,13 @@ pub fun main(address: Address, itemID: UInt64): AnyStruct {
 
   if let collection = getAccount(address).getCapability<&Momentables.Collection{NonFungibleToken.CollectionPublic, Momentables.MomentablesCollectionPublic}>(Momentables.CollectionPublicPath).borrow() {
     if let item = collection.borrowMomentables(id: itemID) {
-
-       if let view =  item.resolveView(Type<MetadataViews.DisplayView>()) {
-         let displayView = view as! MetadataViews.DisplayView
+       if let view =  item.resolveView(Type<MetadataViews.Display>()) {
+         let displayView = view as! MetadataViews.Display
          let owner: Address = item.owner!.address!
          let ipfsThumbnail = displayView.thumbnail as! MetadataViews.IPFSFile
          
          if let view = item.resolveView(Type<MetadataViews.RarityView>()) {
-          var rarityView: MetadataViews.RarityView = view as! MetadataViews.RarityView
+          var rarityView = view as! MetadataViews.RarityView
         
           return AccountItem(
                     name: displayView.name,
@@ -88,7 +87,6 @@ pub fun main(address: Address, itemID: UInt64): AnyStruct {
        }
 
       //return {itemID: itemID, momentableId: item.momentableId, resourceID: item.uuid, owner: address}
-      return AccountItem
     }
   }
 

@@ -1,12 +1,17 @@
+// This script returns the balance of an account's FLOW vault.
+//
+// Parameters:
+// - address: The address of the account holding the FLOW vault.
+
 import FungibleToken from "../../contracts/FungibleToken.cdc"
 import FlowToken from "../../contracts/FlowToken.cdc"
 
-pub fun main(account: Address): UFix64 {
+pub fun main(address: Address): UFix64 {
+    let account = getAccount(address)
 
-    let vaultRef = getAccount(account)
-        .getCapability(/public/flowTokenBalance)
+    let vaultRef = account.getCapability(/public/flowTokenBalance)!
         .borrow<&FlowToken.Vault{FungibleToken.Balance}>()
-        ?? panic("Could not borrow Balance reference to the Vault")
+        ?? panic("Could not borrow reference to the vault balance")
 
     return vaultRef.balance
 }
