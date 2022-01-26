@@ -87,7 +87,7 @@ pub contract Momentables: NonFungibleToken {
          pub fun getViews(): [Type] {
             return [
                 Type<MetadataViews.Display>(),
-                Type<MetadataViews.MomentableView>()
+                Type<MetadataViews.RarityView>()
             ]
         }
 
@@ -99,17 +99,11 @@ pub contract Momentables: NonFungibleToken {
                         description: self.description,
                         thumbnail: MetadataViews.IPFSFile(
                             cid: self.imageCID, 
-                            path: "sm.png"
+                            path: ""
                         )
                     )
-                case Type<MetadataViews.MomentableView>():
-                    return MetadataViews.MomentableView(
-                        name: self.name,
-                        description: self.description,
-                        thumbnail: MetadataViews.IPFSFile(
-                            cid: self.imageCID, 
-                            path: ""
-                        ),
+                case Type<MetadataViews.RarityView>():
+                    return MetadataViews.RarityView(
                         traits: self.traits
                     )
             }

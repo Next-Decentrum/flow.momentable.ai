@@ -112,21 +112,11 @@ pub contract MetadataViews {
         }
     }
 
-    pub struct MomentableView{
-        pub let name: String
-        pub let description: String
-        pub let thumbnail: AnyStruct{File}
+    pub struct RarityView{
         pub let traits: {String: {String:String}}
-
         init(
-            name: String,
-            description: String,
-            thumbnail: AnyStruct{File},
             traits: {String: {String:String}}
         ) {
-            self.name = name
-            self.description = description
-            self.thumbnail = thumbnail
             self.traits = traits
         } 
     }

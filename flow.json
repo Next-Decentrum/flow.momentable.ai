@@ -7,7 +7,7 @@
   },
   "contracts": {
     "FlowToken": {
-      "source": "./cadence/contracts/standard/FlowToken.cdc",
+      "source": "./cadence/contracts/FlowToken.cdc",
       "aliases": {
         "emulator": "0xf8d6e0586b0a20c7",
         "testnet": "0x7e60df042a9c0868",
@@ -15,14 +15,14 @@
       }
     },
     "FUSD": {
-      "source": "./cadence/contracts/standard/FUSD.cdc",
+      "source": "./cadence/contracts/FUSD.cdc",
       "aliases": {
         "testnet": "0xe223d8a629e49c68",
         "mainnet": "0x3c5959b568896393"
       }
     },
     "NonFungibleToken": {
-      "source": "./cadence/contracts/standard/NonFungibleToken.cdc",
+      "source": "./cadence/contracts/NonFungibleToken.cdc",
       "aliases": {
         "emulator": "0xf8d6e0586b0a20c7",
         "testnet": "0x631e88ae7f1d7c20",
@@ -30,7 +30,7 @@
       }
     },
     "FungibleToken": {
-      "source": "./cadence/contracts/standard/FungibleToken.cdc",
+      "source": "./cadence/contracts/FungibleToken.cdc",
       "aliases": {
         "emulator": "0xf8d6e0586b0a20c7",
         "testnet": "0x9a0766d93b6608b7",
