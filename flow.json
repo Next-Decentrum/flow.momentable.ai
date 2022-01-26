@@ -9,7 +9,7 @@
     "FlowToken": {
       "source": "./cadence/contracts/FlowToken.cdc",
       "aliases": {
-        "emulator": "0xf8d6e0586b0a20c7",
+        "emulator": "0x0ae53cb6e3f42a79",
         "testnet": "0x7e60df042a9c0868",
         "mainnet": "0x1654653399040a61"
       }
@@ -99,6 +99,7 @@
       "emulator-account": [
         "NonFungibleToken",
         "FungibleToken",
+        "FUSD",
         "MetadataViews",
         "Momentables",
         "NFTStorefront"
