@@ -1,8 +1,11 @@
-import NonFungibleToken from 0x631e88ae7f1d7c20
-import Momentables from 0xa5bb5acbf4dd8848
-import FungibleToken from 0x9a0766d93b6608b7
-import FlowToken from 0x7e60df042a9c0868
-import NFTStorefront from 0x94b06cfca1d8a476
+import NonFungibleToken from "../../contracts/NonFungibleToken.cdc"
+import FungibleToken from "../../contracts/FungibleToken.cdc"
+import FlowToken from "../../contracts/FlowToken.cdc"
+
+import Momentables from "../../contracts/Momentables.cdc"
+import NFTStorefront from "../../contracts/NFTStorefront.cdc"
+
+
 
 pub fun getOrCreateStorefront(account: AuthAccount): &NFTStorefront.Storefront {
     if let storefrontRef = account.borrow<&NFTStorefront.Storefront>(from: NFTStorefront.StorefrontStoragePath) {

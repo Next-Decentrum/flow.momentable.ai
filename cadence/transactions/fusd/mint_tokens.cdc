@@ -1,5 +1,5 @@
-import FungibleToken from "../../contracts/standard/FungibleToken.cdc"
-import FUSD from "../../contracts/standard/FUSD.cdc"
+import FungibleToken from "../../contracts/FungibleToken.cdc"
+import FUSD from "../../contracts/FUSD.cdc"
 
 transaction(recipient: Address, amount: UFix64) {
     let tokenAdmin: &FUSD.Administrator

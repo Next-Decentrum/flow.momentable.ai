@@ -1,4 +1,7 @@
 import NonFungibleToken from "../../contracts/NonFungibleToken.cdc"
+import FungibleToken from "../../contracts/FungibleToken.cdc"
+import FlowToken from "../../contracts/FlowToken.cdc"
+
 import Momentables from "../../contracts/Momentables.cdc"
 
 transaction(
@@ -42,13 +45,17 @@ transaction(
              panic("Invalid collaborator data")
         }
 
-        let creatorData = Momentables.Creator(creatorName: creatorName, creatorAddress: creatorAddress, creatorRoyalty: creatorRoyalty);
+        let creatorAccount = getAccount(creatorAddress)
+        let creatorWallet = creatorAccount.getCapability<&FlowToken.Vault{FungibleToken.Receiver}>(/public/fusdReciever)!
+        let creatorData = Momentables.Creator(creatorName: creatorName, creatorWallet: creatorWallet, creatorRoyalty: creatorRoyalty);
         
         let collaboratorsData:[ Momentables.Collaborator] = []
 
         var index = 0
         while index < collaboratorNames.length{
-            collaboratorsData.append(Momentables.Collaborator(collaboratorName: collaboratorNames[index], collaboratorAddress: collaboratorAddresses[index], collaboratorRoyalty: collaboratorRoyalties[index])) 
+            let collaboratorAccount = getAccount(collaboratorAddresses[index])
+            let collaboratorWallet = collaboratorAccount.getCapability<&FlowToken.Vault{FungibleToken.Receiver}>(/public/fusdReciever)!
+            collaboratorsData.append(Momentables.Collaborator(collaboratorName: collaboratorNames[index], collaboratorAddress: collaboratorWallet, collaboratorRoyalty: collaboratorRoyalties[index])) 
             index = index+1
         }
 
