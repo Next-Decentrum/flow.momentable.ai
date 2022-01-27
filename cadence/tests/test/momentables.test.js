@@ -108,7 +108,14 @@ describe('Momentables', () => {
         secondaryPower: 'Strength 3d6',
         additionalData: 'Nobility',
       },
+      'Power Tattoo': {
+        rarity: '4.01%',
+        name: 'Warriors Scabbard',
+        primaryPower: 'Strength 3d8',
+        secondaryPower: 'Constitution 2d4',
+      },
     };
+
     const creatorName = 'Creator-1';
     const creatorAddress = MomentablesAdmin;
     const creatorRoyalty = 2.0;
