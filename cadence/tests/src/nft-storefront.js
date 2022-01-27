@@ -1,26 +1,32 @@
-import { deployContractByName, executeScript, sendTransaction } from "flow-js-testing";
-import { getMomentablesAdminAddress } from "./common";
-import { deployKibble, setupKibbleOnAccount } from "./kibble";
-import { deployMomentables, setupMomentablesOnAccount } from "./Momentables";
+import {
+  getMomentablesAdminAddress,
+  sendTransactionWithErrorRaised,
+  executeScriptWithErrorRaised,
+  deployContractByNameWithErrorRaised,
+} from './common';
+
+import { deployMomentables, setupMomentablesOnAccount } from './Momentables';
 
 /*
- * Deploys Kibble, Momentables and NFTStorefront contracts to MomentablesAdmin.
+ * Deploys Momentables and NFTStorefront contracts to MomentablesAdmin.
  * @throws Will throw an error if transaction is reverted.
  * @returns {Promise<*>}
  * */
 export const deployNFTStorefront = async () => {
-	const MomentablesAdmin = await getMomentablesAdminAddress();
+  const MomentablesAdmin = await getMomentablesAdminAddress();
 
-	await deployKibble();
-	await deployMomentables();
+  await deployMomentables();
 
-	const addressMap = {
-		NonFungibleToken: MomentablesAdmin,
-		Momento: MomentablesAdmin,
-		Momentables: MomentablesAdmin,
-	};
+  const addressMap = {
+    NonFungibleToken: MomentablesAdmin,
+    Momentables: MomentablesAdmin,
+  };
 
-	return deployContractByName({ to: MomentablesAdmin, name: "NFTStorefront", addressMap });
+  return deployContractByNameWithErrorRaised({
+    to: MomentablesAdmin,
+    name: 'NFTStorefront',
+    addressMap,
+  });
 };
 
 /*
@@ -30,14 +36,13 @@ export const deployNFTStorefront = async () => {
  * @returns {Promise<*>}
  * */
 export const setupStorefrontOnAccount = async (account) => {
-	// Account shall be able to store Momentables items and operate Kibbles
-	// await setupKibbleOnAccount(account);
-	await setupMomentablesOnAccount(account);
+  // Account shall be able to store Kitty Items
+  await setupMomentablesOnAccount(account);
 
-	const name = "nftStorefront/setup_account";
-	const signers = [account];
+  const name = 'nftStorefront/setup_account';
+  const signers = [account];
 
-	return sendTransaction({ name, signers });
+  return sendTransactionWithErrorRaised({ name, signers });
 };
 
 /*
@@ -48,12 +53,12 @@ export const setupStorefrontOnAccount = async (account) => {
  * @throws Will throw an error if transaction is reverted.
  * @returns {Promise<*>}
  * */
-export const sellItem = async (seller, itemId, price) => {
-	const name = "nftStorefront/sell_item_kibble";
-	const args = [itemId, price];
-	const signers = [seller];
+export const createListing = async (seller, itemId, price) => {
+  const name = 'nftStorefront/create_listing';
+  const args = [itemId, price];
+  const signers = [seller];
 
-	return sendTransaction({ name, args, signers });
+  return sendTransactionWithErrorRaised({ name, args, signers });
 };
 
 /*
@@ -64,12 +69,12 @@ export const sellItem = async (seller, itemId, price) => {
  * @throws Will throw an error if transaction is reverted.
  * @returns {Promise<*>}
  * */
-export const buyItem = async (buyer, resourceId, seller) => {
-	const name = "nftStorefront/buy_item_kibble";
-	const args = [resourceId, seller];
-	const signers = [buyer];
+export const purchaseListing = async (buyer, resourceId, seller) => {
+  const name = 'nftStorefront/purchase_listing';
+  const args = [resourceId, seller];
+  const signers = [buyer];
 
-	return sendTransaction({ name, args, signers });
+  return sendTransactionWithErrorRaised({ name, args, signers });
 };
 
 /*
@@ -79,12 +84,12 @@ export const buyItem = async (buyer, resourceId, seller) => {
  * @throws Will throw an error if transaction is reverted.
  * @returns {Promise<*>}
  * */
-export const removeItem = async (owner, itemId) => {
-	const name = "nftStorefront/remove_item";
-	const signers = [owner];
-	const args = [itemId];
+export const removeListing = async (owner, itemId) => {
+  const name = 'nftStorefront/remove_listing';
+  const signers = [owner];
+  const args = [itemId];
 
-	return sendTransaction({ name, args, signers });
+  return sendTransactionWithErrorRaised({ name, args, signers });
 };
 
 /*
@@ -93,9 +98,9 @@ export const removeItem = async (owner, itemId) => {
  * @throws Will throw an error if execution will be halted
  * @returns {UInt64}
  * */
-export const getSaleOfferCount = async (account) => {
-	const name = "nftStorefront/get_sale_offers_length";
-	const args = [account];
+export const getListingCount = async (account) => {
+  const name = 'nftStorefront/get_listings_length';
+  const args = [account];
 
-	return executeScript({ name, args });
+  return executeScriptWithErrorRaised({ name, args });
 };
