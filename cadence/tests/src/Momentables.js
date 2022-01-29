@@ -82,13 +82,15 @@ export const mintMomentable = async (
   momentableName,
   description,
   imageCID,
+  directoryPath,
   traits,
   creatorName,
   creatorAddress,
   creatorRoyalty,
   collaboratorNames,
   collaboratorAddresses,
-  collaboratorRoyalties
+  collaboratorRoyalties,
+  momentableCollectionDetails
 ) => {
   const MomentablesAdmin = await getMomentablesAdminAddress();
 
@@ -99,6 +101,7 @@ export const mintMomentable = async (
     momentableName,
     description,
     imageCID,
+    directoryPath,
     traits,
     creatorName,
     creatorAddress,
@@ -106,6 +109,7 @@ export const mintMomentable = async (
     collaboratorNames,
     collaboratorAddresses,
     collaboratorRoyalties,
+    momentableCollectionDetails,
   ];
   const signers = [MomentablesAdmin];
 

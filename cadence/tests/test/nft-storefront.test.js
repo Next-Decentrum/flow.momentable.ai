@@ -75,6 +75,7 @@ describe('NFT Storefront', () => {
     const description =
       'Each crypto pharaoh is cryptographically unique, programmatically brought to life, endowed with a rare combination of sacred backgrounds, majestic costumes, power neckpieces, healing accessories, magical staffs, immortal tattoos and much more. All Crypto Pharaohs are remarkable, magical, and powerful.Some are rarer than other';
     const imageCID = 'QmU351M14k5n5VszC6KXmqMVDnPH8BRWwhW6Suur9bwhtw';
+    const directoryPath = '';
     const traits = {
       'Divine Skin Tone': {
         rarity: '4.61%',
@@ -90,6 +91,9 @@ describe('NFT Storefront', () => {
     const collaboratorNames = ['Collab-1'];
     const collaboratorAddresses = [Bob];
     const collaboratorRoyalties = [2.4];
+    const momentableCollectionDetails = {
+      'Collection Name': 'Crypto Pharaohs',
+    };
 
     await shallPass(
       mintMomentable(
@@ -98,13 +102,15 @@ describe('NFT Storefront', () => {
         momentableName,
         description,
         imageCID,
+        directoryPath,
         traits,
         creatorName,
         creatorAddress,
         creatorRoyalty,
         collaboratorNames,
         collaboratorAddresses,
-        collaboratorRoyalties
+        collaboratorRoyalties,
+        momentableCollectionDetails
       )
     );
 
@@ -134,6 +140,7 @@ describe('NFT Storefront', () => {
     const description =
       'Each crypto pharaoh is cryptographically unique, programmatically brought to life, endowed with a rare combination of sacred backgrounds, majestic costumes, power neckpieces, healing accessories, magical staffs, immortal tattoos and much more. All Crypto Pharaohs are remarkable, magical, and powerful.Some are rarer than other';
     const imageCID = 'QmU351M14k5n5VszC6KXmqMVDnPH8BRWwhW6Suur9bwhtw';
+    const directoryPath = '';
     const traits = {
       'Divine Skin Tone': {
         rarity: '4.61%',
@@ -149,6 +156,9 @@ describe('NFT Storefront', () => {
     const collaboratorNames = ['Collab-1'];
     const collaboratorAddresses = [Bob];
     const collaboratorRoyalties = [2.4];
+    const momentableCollectionDetails = {
+      'Collection Name': 'Crypto Pharaohs',
+    };
 
     await shallPass(
       mintMomentable(
@@ -157,13 +167,15 @@ describe('NFT Storefront', () => {
         momentableName,
         description,
         imageCID,
+        directoryPath,
         traits,
         creatorName,
         creatorAddress,
         creatorRoyalty,
         collaboratorNames,
         collaboratorAddresses,
-        collaboratorRoyalties
+        collaboratorRoyalties,
+        momentableCollectionDetails
       )
     );
 
@@ -213,6 +225,7 @@ describe('NFT Storefront', () => {
     const description =
       'Each crypto pharaoh is cryptographically unique, programmatically brought to life, endowed with a rare combination of sacred backgrounds, majestic costumes, power neckpieces, healing accessories, magical staffs, immortal tattoos and much more. All Crypto Pharaohs are remarkable, magical, and powerful.Some are rarer than other';
     const imageCID = 'QmU351M14k5n5VszC6KXmqMVDnPH8BRWwhW6Suur9bwhtw';
+    const directoryPath = '';
     const traits = {
       'Divine Skin Tone': {
         rarity: '4.61%',
@@ -228,6 +241,9 @@ describe('NFT Storefront', () => {
     const collaboratorNames = ['Collab-1'];
     const collaboratorAddresses = [Bob];
     const collaboratorRoyalties = [2.4];
+    const momentableCollectionDetails = {
+      'Collection Name': 'Crypto Pharaohs',
+    };
 
     await shallPass(
       mintMomentable(
@@ -236,13 +252,15 @@ describe('NFT Storefront', () => {
         momentableName,
         description,
         imageCID,
+        directoryPath,
         traits,
         creatorName,
         creatorAddress,
         creatorRoyalty,
         collaboratorNames,
         collaboratorAddresses,
-        collaboratorRoyalties
+        collaboratorRoyalties,
+        momentableCollectionDetails
       )
     );
 
