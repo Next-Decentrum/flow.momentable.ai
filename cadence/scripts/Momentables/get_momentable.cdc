@@ -16,7 +16,7 @@ pub struct AccountItem {
   pub let owner: Address
   pub let creatorName: String
   pub let creatorAddress: Address
-
+  pub let momentableCollectionDetails: {String: String}
 
   init(
     name: String,
@@ -28,7 +28,8 @@ pub struct AccountItem {
     resourceID: UInt64, 
     owner: Address,
     creatorName: String,
-    creatorAddress: Address) {
+    creatorAddress: Address,
+    momentableCollectionDetails: {String: String}) {
     self.name = name
     self.description = description
     self.thumbnail = thumbnail
@@ -39,6 +40,7 @@ pub struct AccountItem {
     self.owner = owner
     self.creatorName = creatorName
     self.creatorAddress = creatorAddress
+    self.momentableCollectionDetails = momentableCollectionDetails
   }
 }
 
@@ -64,20 +66,28 @@ pub fun main(address: Address, itemID: UInt64): AnyStruct {
          let owner: Address = item.owner!.address!
          let ipfsThumbnail = displayView.thumbnail as! MetadataViews.IPFSFile
          
-         if let view = item.resolveView(Type<MetadataViews.RarityView>()) {
-          var rarityView = view as! MetadataViews.RarityView
+         let creator = item.getCreator()
+         let collaborators = item.getColloboarators()
+         let momentableCollectionDetails = item.getMomentableCollectionDetails()
+
+         if let view = item.resolveView(Type<Momentables.RarityView>()) {
+          var rarityView = view as! Momentables.RarityView
+
+          let traits = item.getTraits()
+         
         
           return AccountItem(
                     name: displayView.name,
                     description: displayView.description,
                     thumbnail: dwebURL(ipfsThumbnail),
-                    traits:rarityView.traits,
+                    traits:traits,
                     itemID: itemID,
                     momentableId: item.momentableId, 
                     resourceID: item.uuid,
                     owner: address,
-                    creatorName: item.creator.creatorName,
-                    creatorAddress: item.creator.creatorWallet.address
+                    creatorName: creator.creatorName,
+                    creatorAddress: creator.creatorWallet.address,
+                    momentableCollectionDetails: momentableCollectionDetails
                 ) 
           
          }
@@ -91,8 +101,9 @@ pub fun main(address: Address, itemID: UInt64): AnyStruct {
                     momentableId: item.momentableId, 
                     resourceID: item.uuid,
                     owner: address,
-                    creatorName: item.creator.creatorName,
-                    creatorAddress: item.creator.creatorWallet.address
+                    creatorName: creator.creatorName,
+                    creatorAddress: creator.creatorWallet.address,
+                    momentableCollectionDetails: momentableCollectionDetails
                 ) 
        }
 

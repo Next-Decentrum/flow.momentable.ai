@@ -58,7 +58,7 @@
       "source": "./cadence/contracts/Momentables.cdc",
       "aliases": {
         "emulator": "0xf8d6e0586b0a20c7",
-        "testnet": "0x213e3564fc727242"
+        "testnet": "0x9f2eb43b6df02730"
       }
     }
   },
@@ -69,7 +69,7 @@
   },
   "accounts": {
     "emulator-account": {
-      "address": "f8d6e0586b0a20c7",
+      "address": "0xf8d6e0586b0a20c7",
       "keys": "680fa28962650ef346a7edf23d63967b0fcf44958488d0d48f8539ece6e92eba"
     },
     "emulator-account1": {
@@ -77,23 +77,23 @@
       "keys": "c34747ea4c941c15a653423262fd18e47de20576b10535e52a7a80a088b58c7a"
     },
     "testnet-account": {
-      "address": "0x213e3564fc727242",
+      "address": "0x9f2eb43b6df02730",
       "key": {
         "type": "hex",
         "index": 0,
         "signatureAlgorithm": "ECDSA_P256",
         "hashAlgorithm": "SHA3_256",
-        "privateKey": "ee55243b1a87f8e7f6a96a64b22a0811af165e41611dac788e6d705959f66f9a"
+        "privateKey": "708cdd179a8835cd2f55d50c6fa9caf3f81d34f62029316afc89f8514d8c2624"
       }
     },
     "testnet-account1": {
-      "address": "0xaebd0976214415a1",
+      "address": "0x6d1d68d5e50e2d8e",
       "key": {
         "type": "hex",
         "index": 0,
         "signatureAlgorithm": "ECDSA_P256",
         "hashAlgorithm": "SHA3_256",
-        "privateKey": "1f0caba497bb533d1bf23ae8f42c291a62aa8a064c3c1788be310a9348a6b6f6"
+        "privateKey": "326b927ba2ad1fb01f0919cdfb703a971e2a956ffa3bb014dfc63ae596dc02fc"
       }
     }
   },
