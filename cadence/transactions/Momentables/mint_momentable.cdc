@@ -10,6 +10,7 @@ transaction(
  name: String,
  description: String,
  imageCID: String,
+ directoryPath: String,
  traits: {String:{String:String}},
  creatorName: String,
  creatorAddress: Address,
@@ -17,6 +18,7 @@ transaction(
  collaboratorNames: [String],
  collaboratorAddresses: [Address],
  collaboratorRoyalties: [UFix64],
+ momentableCollectionDetails: {String: String}
  ) {
     
     // local variable for storing the minter reference
@@ -66,8 +68,11 @@ transaction(
             name:name,
             description:description,
             imageCID:imageCID, 
+            directoryPath: directoryPath,
             traits: traits, 
             creator:creatorData , 
-            collaborators: collaboratorsData)
+            collaborators: collaboratorsData,
+            momentableCollectionDetails: momentableCollectionDetails
+            )
     }
 }
