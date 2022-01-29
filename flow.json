@@ -58,7 +58,7 @@
       "source": "./cadence/contracts/Momentables.cdc",
       "aliases": {
         "emulator": "0xf8d6e0586b0a20c7",
-        "testnet": "0x213e3564fc727242"
+        "testnet": "0x9f2eb43b6df02730"
       }
     }
   },
