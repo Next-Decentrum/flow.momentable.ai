@@ -68,13 +68,13 @@ pub contract Momentables: NonFungibleToken {
 
         pub let momentableId: String
 
-        access(self) let name: String
+        pub let name: String
 
-        access(self) let description: String
+        pub let description: String
 
-        access(self) let imageCID: String
+        pub let imageCID: String
 
-        access(self) let directoryPath: String
+        pub let directoryPath: String
 
         access(self) let traits: {String: {String: String}}
 
@@ -97,6 +97,22 @@ pub contract Momentables: NonFungibleToken {
             self.creator = creator
             self.collaborators = collaborators
             self.momentableCollectionDetails = momentableCollectionDetails
+        }
+
+        pub fun getTraits(): {String: {String: String}}{
+            return self.traits
+        }
+
+        pub fun getCreator(): Creator{
+            return self.creator
+        }
+
+        pub fun getColloboarators(): [Collaborator]{
+            return self.collaborators
+        }
+
+        pub fun getMomentableCollectionDetails(): {String: String}{
+            return self.momentableCollectionDetails
         }
 
          pub fun getViews(): [Type] {
