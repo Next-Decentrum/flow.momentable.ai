@@ -71,10 +71,10 @@ pub fun main(address: Address, listingResourceID: UInt64): ListingItem? {
                     let owner: Address = item.owner!.address!
                     let ipfsThumbnail = displayView.thumbnail as! MetadataViews.IPFSFile
                     
-                    if let view = item.resolveView(Type<MetadataViews.RarityView>()) {
-                    var rarityView = view as! MetadataViews.RarityView
+                    if let view = item.resolveView(Type<Momentables.RarityView>()) {
+                    var rarityView = view as! Momentables.RarityView
                     
-                    return AccountItem(
+                    return ListingItem(
                                 name: displayView.name,
                                 description: displayView.description,
                                 thumbnail: dwebURL(ipfsThumbnail),
@@ -83,13 +83,13 @@ pub fun main(address: Address, listingResourceID: UInt64): ListingItem? {
                                 momentableId: item.momentableId, 
                                 resourceID: item.uuid,
                                 owner: address,
-                                creatorName: item.creator.creatorName,
-                                creatorAddress: item.creator.creatorWallet.address
+                                creatorName: item.getCreator().creatorName,
+                                creatorAddress: item.getCreator().creatorWallet.address
                             ) 
                     
                     }
 
-                    return AccountItem(
+                    return ListingItem(
                                 name: displayView.name,
                                 description: displayView.description,
                                 thumbnail: dwebURL(ipfsThumbnail),
@@ -98,8 +98,8 @@ pub fun main(address: Address, listingResourceID: UInt64): ListingItem? {
                                 momentableId: item.momentableId, 
                                 resourceID: item.uuid,
                                 owner: address,
-                                creatorName: item.creator.creatorName,
-                                creatorAddress: item.creator.creatorWallet.address
+                                creatorName: item.getCreator().creatorName,
+                                creatorAddress: item.getCreator().creatorWallet.address
                             ) 
                 }
 
