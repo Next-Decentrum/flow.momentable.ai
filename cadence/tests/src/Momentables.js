@@ -5,7 +5,11 @@ import {
   sendTransaction,
 } from 'flow-js-testing';
 
-import { getMomentablesAdminAddress } from './common';
+import {
+  getMomentablesAdminAddress,
+  sendTransactionWithErrorRaised,
+  deployContractByNameWithErrorRaised,
+} from './common';
 
 // Momentables types
 export const momentableId = '61d8a32f26beea70ef4ad832';
@@ -19,13 +23,22 @@ export const deployMomentables = async () => {
   const MomentablesAdmin = await getMomentablesAdminAddress();
   await mintFlow(MomentablesAdmin, '10.0');
 
-  await deployContractByName({
+  await deployContractByNameWithErrorRaised({
     to: MomentablesAdmin,
     name: 'NonFungibleToken',
   });
 
-  const addressMap = { NonFungibleToken: MomentablesAdmin };
-  return deployContractByName({
+  await deployContractByNameWithErrorRaised({
+    to: MomentablesAdmin,
+    name: 'MetadataViews',
+  });
+
+  const addressMap = {
+    NonFungibleToken: MomentablesAdmin,
+    MetadataViews: MomentablesAdmin,
+  };
+
+  return deployContractByNameWithErrorRaised({
     to: MomentablesAdmin,
     name: 'Momentables',
     addressMap,
@@ -42,7 +55,7 @@ export const setupMomentablesOnAccount = async (account) => {
   const name = 'Momentables/setup_account';
   const signers = [account];
 
-  return sendTransaction({ name, signers });
+  return sendTransactionWithErrorRaised({ name, signers });
 };
 
 /*
@@ -51,7 +64,7 @@ export const setupMomentablesOnAccount = async (account) => {
  * @returns {UInt64} - number of NFT minted so far
  * */
 export const getMomentablesupply = async () => {
-  const name = 'Momentables/get_Momentables_supply';
+  const name = 'Momentables/get_momentable_supply';
 
   return executeScript({ name });
 };
@@ -63,12 +76,13 @@ export const getMomentablesupply = async () => {
  * @throws Will throw an error if execution will be halted
  * @returns {Promise<*>}
  * */
-export const mintMomentable = async ({
+export const mintMomentable = async (
   recipient,
   momentableId,
-  name,
+  momentableName,
   description,
   imageCID,
+  directoryPath,
   traits,
   creatorName,
   creatorAddress,
@@ -76,16 +90,18 @@ export const mintMomentable = async ({
   collaboratorNames,
   collaboratorAddresses,
   collaboratorRoyalties,
-}) => {
+  momentableCollectionDetails
+) => {
   const MomentablesAdmin = await getMomentablesAdminAddress();
 
-  const contractName = 'Momentables/mint_momentable';
+  const name = 'Momentables/mint_momentable';
   const args = [
     recipient,
     momentableId,
-    name,
+    momentableName,
     description,
     imageCID,
+    directoryPath,
     traits,
     creatorName,
     creatorAddress,
@@ -93,10 +109,11 @@ export const mintMomentable = async ({
     collaboratorNames,
     collaboratorAddresses,
     collaboratorRoyalties,
+    momentableCollectionDetails,
   ];
   const signers = [MomentablesAdmin];
 
-  return sendTransaction({ contractName, args, signers });
+  return sendTransactionWithErrorRaised({ name, args, signers });
 };
 
 /*
@@ -108,7 +125,7 @@ export const mintMomentable = async ({
  * @returns {Promise<*>}
  * */
 export const transferMomentable = async (sender, recipient, itemId) => {
-  const name = 'Momentables/transfer_Momentable';
+  const name = 'Momentables/transfer_momentable';
   const args = [recipient, itemId];
   const signers = [sender];
 

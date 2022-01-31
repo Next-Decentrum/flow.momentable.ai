@@ -18,36 +18,14 @@ import {
   setupMomentablesOnAccount,
   transferMomentable,
 } from '../src/Momentables';
+import { arg } from '@onflow/fcl';
+import * as t from '@onflow/types';
 
 // We need to set timeout for a higher number, because some transactions might take up some time
 jest.setTimeout(50000);
 
-const mintArgs = {
-  recepient: 0xf8d6e0586b0a20c7,
-  momentableId: '61d8a32f26beea70ef4ad832',
-  name: 'Edjo',
-  description:
-    'Each crypto pharaoh is cryptographically unique, programmatically brought to life, endowed with a rare combination of sacred backgrounds, majestic costumes, power neckpieces, healing accessories, magical staffs, immortal tattoos and much more. All Crypto Pharaohs are remarkable, magical, and powerful.Some are rarer than other',
-  imageCID: 'QmU351M14k5n5VszC6KXmqMVDnPH8BRWwhW6Suur9bwhtw',
-  traits: {
-    'Divine Skin Tone': {
-      rarity: '4.61%',
-      name: 'Brown',
-      primaryPower: 'Constitution 3d8',
-      secondaryPower: 'Strength 3d6',
-      additionalData: 'Nobility',
-    },
-  },
-  creatorName: 'Creator-1',
-  creatorAddress: '0x01cf0e2f2f715450',
-  creatorRoyalty: 2.0,
-  collaboratorNames: ['Collab-1', 'Collab-2'],
-  collaboratorAddresses: [0x01, 0x02],
-  collaboratorRoyalties: [1.2, 2.4],
-};
-
 describe('Momentables', () => {
-  // Instantiate emulator and path to Cadence files
+  // Instantiate emulator and path to Cadence files 0x01cf0e2f2f715450
   beforeEach(async () => {
     const basePath = path.resolve(__dirname, '../../');
     const port = 8080;
@@ -69,29 +47,36 @@ describe('Momentables', () => {
   it('supply should be 0 after contract is deployed', async () => {
     // Setup
     await deployMomentables();
-    const MomentableAdmin = await getMomentablesAdminAddress();
-    await shallPass(setupMomentablesOnAccount(MomentableAdmin));
+    const MomentablesAdmin = await getMomentablesAdminAddress();
+
+    await shallPass(setupMomentablesOnAccount(MomentablesAdmin));
 
     await shallResolve(async () => {
       const supply = await getMomentablesupply();
-      expect(supply).toBe(0);
+      expect(supply[0]).toBe(0);
     });
   });
 
   it('should be able to mint a Momentable', async () => {
     // Setup
     await deployMomentables();
+    const MomentablesAdmin = await getMomentablesAdminAddress();
+
     const Alice = await getAccountAddress('Alice');
     await setupMomentablesOnAccount(Alice);
 
+    const Bob = await getAccountAddress('Bob');
+    await setupMomentablesOnAccount(Bob);
+
     // Mint instruction for Alice account shall be resolved
 
-    const recepient = 0xf8d6e0586b0a20c7;
+    const recepient = Alice;
     const momentableId = '61d8a32f26beea70ef4ad832';
-    const name = 'Edjo';
+    const momentableName = 'Edjo';
     const description =
       'Each crypto pharaoh is cryptographically unique, programmatically brought to life, endowed with a rare combination of sacred backgrounds, majestic costumes, power neckpieces, healing accessories, magical staffs, immortal tattoos and much more. All Crypto Pharaohs are remarkable, magical, and powerful.Some are rarer than other';
     const imageCID = 'QmU351M14k5n5VszC6KXmqMVDnPH8BRWwhW6Suur9bwhtw';
+    const directoryPath = '';
     const traits = {
       'Divine Skin Tone': {
         rarity: '4.61%',
@@ -100,15 +85,42 @@ describe('Momentables', () => {
         secondaryPower: 'Strength 3d6',
         additionalData: 'Nobility',
       },
+      'Power Tattoo': {
+        rarity: '4.01%',
+        name: 'Warriors Scabbard',
+        primaryPower: 'Strength 3d8',
+        secondaryPower: 'Constitution 2d4',
+      },
     };
-    const creatorName = 'Creator-1';
-    const creatorAddress = '0x01cf0e2f2f715450';
-    const creatorRoyalty = 2.0;
-    const collaboratorNames = ['Collab-1', 'Collab-2'];
-    const collaboratorAddresses = [0x01, 0x02];
-    const collaboratorRoyalties = [1.2, 2.4];
 
-    await shallPass(mintMomentable(mintArgs)); //Update with actual params
+    const creatorName = 'Creator-1';
+    const creatorAddress = MomentablesAdmin;
+    const creatorRoyalty = 2.0;
+    const collaboratorNames = ['Collab-1'];
+    const collaboratorAddresses = [Bob];
+    const collaboratorRoyalties = [2.4];
+    const momentableCollectionDetails = {
+      'Collection Name': 'Crypto Pharaohs',
+    };
+
+    await shallPass(
+      mintMomentable(
+        recepient,
+        momentableId,
+        momentableName,
+        description,
+        imageCID,
+        directoryPath,
+        traits,
+        creatorName,
+        creatorAddress,
+        creatorRoyalty,
+        collaboratorNames,
+        collaboratorAddresses,
+        collaboratorRoyalties,
+        momentableCollectionDetails
+      )
+    );
   });
 
   it('should be able to create a new empty NFT Collection', async () => {
@@ -120,7 +132,7 @@ describe('Momentables', () => {
     // shall be able te read Alice collection and ensure it's empty
     await shallResolve(async () => {
       const itemCount = await getMomentableCount(Alice);
-      expect(itemCount).toBe(0);
+      expect(itemCount[0]).toBe(0);
     });
   });
 
@@ -138,13 +150,65 @@ describe('Momentables', () => {
 
   it('should be able to withdraw an NFT and deposit to another accounts collection', async () => {
     await deployMomentables();
+    const MomentablesAdmin = await getMomentablesAdminAddress();
+
     const Alice = await getAccountAddress('Alice');
     const Bob = await getAccountAddress('Bob');
     await setupMomentablesOnAccount(Alice);
     await setupMomentablesOnAccount(Bob);
 
     // Mint instruction for Alice account shall be resolved
-    await shallPass(mintMomentable(mintArgs));
+    const recepient = Alice;
+    const momentableId = '61d8a32f26beea70ef4ad832';
+    const momentableName = 'Edjo';
+    const description =
+      'Each crypto pharaoh is cryptographically unique, programmatically brought to life, endowed with a rare combination of sacred backgrounds, majestic costumes, power neckpieces, healing accessories, magical staffs, immortal tattoos and much more. All Crypto Pharaohs are remarkable, magical, and powerful.Some are rarer than other';
+    const imageCID = 'QmU351M14k5n5VszC6KXmqMVDnPH8BRWwhW6Suur9bwhtw';
+    const directoryPath = '';
+    const traits = {
+      'Divine Skin Tone': {
+        rarity: '4.61%',
+        name: 'Brown',
+        primaryPower: 'Constitution 3d8',
+        secondaryPower: 'Strength 3d6',
+        additionalData: 'Nobility',
+      },
+      'Power Tattoo': {
+        rarity: '4.01%',
+        name: 'Warriors Scabbard',
+        primaryPower: 'Strength 3d8',
+        secondaryPower: 'Constitution 2d4',
+      },
+    };
+
+    const creatorName = 'Creator-1';
+    const creatorAddress = MomentablesAdmin;
+    const creatorRoyalty = 2.0;
+    const collaboratorNames = ['Collab-1'];
+    const collaboratorAddresses = [Bob];
+    const collaboratorRoyalties = [2.4];
+    const momentableCollectionDetails = {
+      'Collection Name': 'Crypto Pharaohs',
+    };
+
+    await shallPass(
+      mintMomentable(
+        recepient,
+        momentableId,
+        momentableName,
+        description,
+        imageCID,
+        directoryPath,
+        traits,
+        creatorName,
+        creatorAddress,
+        creatorRoyalty,
+        collaboratorNames,
+        collaboratorAddresses,
+        collaboratorRoyalties,
+        momentableCollectionDetails
+      )
+    );
 
     // Transfer transaction shall pass
     await shallPass(transferMomentable(Alice, Bob, 0));

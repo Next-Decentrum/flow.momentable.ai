@@ -1,5 +1,5 @@
-import NonFungibleToken from "./standard/NonFungibleToken.cdc"
-import FungibleToken from "./standard/FungibleToken.cdc"
+import NonFungibleToken from "./NonFungibleToken.cdc"
+import FungibleToken from "./FungibleToken.cdc"
 import MetadataViews from "./MetadataViews.cdc"
 
 // Momentables
@@ -28,10 +28,10 @@ pub contract Momentables: NonFungibleToken {
 
     pub struct Creator{
         pub let creatorName: String
-        pub let creatorWallet: Capability<&{FungibleToken.Receiver}>
+        pub let creatorWallet: Capability<&AnyResource{FungibleToken.Receiver}>
         pub let creatorRoyalty: UFix64
 
-        init(creatorName: String, creatorWallet: Capability<&{FungibleToken.Receiver}>, creatorRoyalty: UFix64){
+        init(creatorName: String, creatorWallet: Capability<&AnyResource{FungibleToken.Receiver}>, creatorRoyalty: UFix64){
             self.creatorName = creatorName
             self.creatorWallet = creatorWallet
             self.creatorRoyalty = creatorRoyalty
@@ -40,14 +40,23 @@ pub contract Momentables: NonFungibleToken {
 
       pub struct Collaborator{
         pub let collaboratorName: String
-        pub let collaboratorWallet: Capability<&{FungibleToken.Receiver}>
+        pub let collaboratorWallet: Capability<&AnyResource{FungibleToken.Receiver}>
         pub let collaboratorRoyalty: UFix64
 
-        init(collaboratorName: String, collaboratorWallet: Capability<&{FungibleToken.Receiver}>, collaboratorRoyalty: UFix64){
+        init(collaboratorName: String, collaboratorWallet: Capability<&AnyResource{FungibleToken.Receiver}>, collaboratorRoyalty: UFix64){
             self.collaboratorName = collaboratorName
             self.collaboratorWallet = collaboratorWallet
             self.collaboratorRoyalty = collaboratorRoyalty
         }
+    }
+
+    pub struct RarityView{
+        pub let traits: {String: {String:String}}
+        init(
+            traits: {String: {String:String}}
+        ) {
+            self.traits = traits
+        } 
     }
 
     // NFT
@@ -65,41 +74,67 @@ pub contract Momentables: NonFungibleToken {
 
         pub let imageCID: String
 
-        pub let traits: {String: {String: String}}
+        pub let directoryPath: String
 
-        pub let creator: Creator
+        access(self) let traits: {String: {String: String}}
 
-        pub let collaborators: [Collaborator]
+        access(self) let creator: Creator
+
+        access(self) let collaborators: [Collaborator]
+
+        access(self) let momentableCollectionDetails: {String: String}
 
         // initializer
         //
-        init(initID: UInt64, initMomentableId: String, name: String, description:String,imageCID:String, traits: {String: {String: String}}, creator: Creator, collaborators: [Collaborator]) {
+        init(initID: UInt64, initMomentableId: String, name: String, description:String,imageCID:String,directoryPath:String, traits: {String: {String: String}}, creator: Creator, collaborators: [Collaborator], momentableCollectionDetails: {String:String}) {
             self.id = initID
             self.momentableId = initMomentableId
             self.name = name
             self.description = description
             self.imageCID = imageCID
+            self.directoryPath = directoryPath
             self.traits = traits
             self.creator = creator
             self.collaborators = collaborators
+            self.momentableCollectionDetails = momentableCollectionDetails
+        }
+
+        pub fun getTraits(): {String: {String: String}}{
+            return self.traits
+        }
+
+        pub fun getCreator(): Creator{
+            return self.creator
+        }
+
+        pub fun getColloboarators(): [Collaborator]{
+            return self.collaborators
+        }
+
+        pub fun getMomentableCollectionDetails(): {String: String}{
+            return self.momentableCollectionDetails
         }
 
          pub fun getViews(): [Type] {
             return [
-                Type<MetadataViews.MomentableView>()
+                Type<MetadataViews.Display>(),
+                Type<RarityView>()
             ]
         }
 
         pub fun resolveView(_ view: Type): AnyStruct? {
             switch view {
-                case Type<MetadataViews.MomentableView>():
-                    return MetadataViews.MomentableView(
+                case Type<MetadataViews.Display>():
+                    return MetadataViews.Display(
                         name: self.name,
                         description: self.description,
                         thumbnail: MetadataViews.IPFSFile(
                             cid: self.imageCID, 
-                            path: ""
-                        ),
+                            path: self.directoryPath
+                        )
+                    )
+                case Type<RarityView>():
+                    return RarityView(
                         traits: self.traits
                     )
             }
@@ -220,11 +255,11 @@ pub contract Momentables: NonFungibleToken {
         // Mints a new NFT with a new ID
 		// and deposit it in the recipients collection using their collection reference
         //
-		pub fun mintNFT(recipient: &{NonFungibleToken.CollectionPublic}, momentableId: String, name:String, description: String, imageCID:String, traits: {String: {String:String}}, creator: Creator, collaborators: [Collaborator]) {
+		pub fun mintNFT(recipient: &{NonFungibleToken.CollectionPublic}, momentableId: String, name:String, description: String, imageCID:String,directoryPath:String, traits: {String: {String:String}}, creator: Creator, collaborators: [Collaborator],momentableCollectionDetails: {String: String}) {
             emit Minted(id: Momentables.totalSupply, momentableId: momentableId)
 
 			// deposit it in the recipient's account using their reference
-			recipient.deposit(token: <-create Momentables.NFT(initID: Momentables.totalSupply, initMomentableId: momentableId, name: name,description:description,imageCID: imageCID, traits: traits, creator: creator, collaborators: collaborators))
+			recipient.deposit(token: <-create Momentables.NFT(initID: Momentables.totalSupply, initMomentableId: momentableId, name: name,description:description,imageCID: imageCID,directoryPath: directoryPath, traits: traits, creator: creator, collaborators: collaborators, momentableCollectionDetails: momentableCollectionDetails))
 
             Momentables.totalSupply = Momentables.totalSupply + (1 as UInt64)
 		}

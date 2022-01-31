@@ -7,22 +7,23 @@
   },
   "contracts": {
     "FlowToken": {
-      "source": "./cadence/contracts/standard/FlowToken.cdc",
+      "source": "./cadence/contracts/FlowToken.cdc",
       "aliases": {
-        "emulator": "0xf8d6e0586b0a20c7",
+        "emulator": "0x0ae53cb6e3f42a79",
         "testnet": "0x7e60df042a9c0868",
         "mainnet": "0x1654653399040a61"
       }
     },
     "FUSD": {
-      "source": "./cadence/contracts/standard/FUSD.cdc",
+      "source": "./cadence/contracts/FUSD.cdc",
       "aliases": {
+        "emulator": "0xf8d6e0586b0a20c7",
         "testnet": "0xe223d8a629e49c68",
         "mainnet": "0x3c5959b568896393"
       }
     },
     "NonFungibleToken": {
-      "source": "./cadence/contracts/standard/NonFungibleToken.cdc",
+      "source": "./cadence/contracts/NonFungibleToken.cdc",
       "aliases": {
         "emulator": "0xf8d6e0586b0a20c7",
         "testnet": "0x631e88ae7f1d7c20",
@@ -30,32 +31,34 @@
       }
     },
     "FungibleToken": {
-      "source": "./cadence/contracts/standard/FungibleToken.cdc",
+      "source": "./cadence/contracts/FungibleToken.cdc",
       "aliases": {
-        "emulator": "0xf8d6e0586b0a20c7",
+        "emulator": "0xee82856bf20e2aa6",
         "testnet": "0x9a0766d93b6608b7",
         "mainnet": "0xf233dcee88fe0abe"
-      }
-    },
-    "MetadataViews": {
-      "source": "./cadence/contracts/MetadataViews.cdc",
-      "aliases": {
-        "emulator": "0xf8d6e0586b0a20c7",
-        "testnet": "0xa67fc618583898ae"
       }
     },
     "NFTStorefront": {
       "source": "./cadence/contracts/NFTStorefront.cdc",
       "aliases": {
         "emulator": "0xf8d6e0586b0a20c7",
-        "testnet": "0xa67fc618583898ae"
+        "testnet": "0x94b06cfca1d8a476",
+        "mainnet": "0x4eb8a10cb9f87357"
+      }
+    },
+    "MetadataViews": {
+      "source": "./cadence/contracts/MetadataViews.cdc",
+      "aliases": {
+        "emulator": "0xf8d6e0586b0a20c7",
+        "testnet": "0x631e88ae7f1d7c20",
+        "mainnet": "0x1d7e57aa55817448"
       }
     },
     "Momentables": {
       "source": "./cadence/contracts/Momentables.cdc",
       "aliases": {
         "emulator": "0xf8d6e0586b0a20c7",
-        "testnet": "0xa67fc618583898ae"
+        "testnet": "0x9f2eb43b6df02730"
       }
     }
   },
@@ -66,7 +69,7 @@
   },
   "accounts": {
     "emulator-account": {
-      "address": "f8d6e0586b0a20c7",
+      "address": "0xf8d6e0586b0a20c7",
       "keys": "680fa28962650ef346a7edf23d63967b0fcf44958488d0d48f8539ece6e92eba"
     },
     "emulator-account1": {
@@ -74,23 +77,23 @@
       "keys": "c34747ea4c941c15a653423262fd18e47de20576b10535e52a7a80a088b58c7a"
     },
     "testnet-account": {
-      "address": "0xa67fc618583898ae",
+      "address": "0x9f2eb43b6df02730",
       "key": {
         "type": "hex",
         "index": 0,
         "signatureAlgorithm": "ECDSA_P256",
         "hashAlgorithm": "SHA3_256",
-        "privateKey": "a42f9c900abb1cba0e80f01f9efef362f03beac54d2e5e05952476b28ae176de"
+        "privateKey": "708cdd179a8835cd2f55d50c6fa9caf3f81d34f62029316afc89f8514d8c2624"
       }
     },
     "testnet-account1": {
-      "address": "0x4f63c8c3cfe3a424",
+      "address": "0x6d1d68d5e50e2d8e",
       "key": {
         "type": "hex",
         "index": 0,
         "signatureAlgorithm": "ECDSA_P256",
         "hashAlgorithm": "SHA3_256",
-        "privateKey": "efd86d59a05e240b31b32ee5a36b8d1bc84ddb7d3c83a5845bd7ea63a637adc5"
+        "privateKey": "326b927ba2ad1fb01f0919cdfb703a971e2a956ffa3bb014dfc63ae596dc02fc"
       }
     }
   },
@@ -98,14 +101,14 @@
     "emulator": {
       "emulator-account": [
         "NonFungibleToken",
-        "FungibleToken",
+        "FUSD",
         "MetadataViews",
         "Momentables",
         "NFTStorefront"
       ]
     },
     "testnet": {
-      "testnet-account": ["MetadataViews", "Momentables", "NFTStorefront"]
+      "testnet-account": ["Momentables"]
     }
   }
 }

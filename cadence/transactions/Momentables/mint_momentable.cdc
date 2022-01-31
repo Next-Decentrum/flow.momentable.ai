@@ -1,4 +1,7 @@
 import NonFungibleToken from "../../contracts/NonFungibleToken.cdc"
+import FungibleToken from "../../contracts/FungibleToken.cdc"
+import FlowToken from "../../contracts/FlowToken.cdc"
+
 import Momentables from "../../contracts/Momentables.cdc"
 
 transaction(
@@ -7,6 +10,7 @@ transaction(
  name: String,
  description: String,
  imageCID: String,
+ directoryPath: String,
  traits: {String:{String:String}},
  creatorName: String,
  creatorAddress: Address,
@@ -14,6 +18,7 @@ transaction(
  collaboratorNames: [String],
  collaboratorAddresses: [Address],
  collaboratorRoyalties: [UFix64],
+ momentableCollectionDetails: {String: String}
  ) {
     
     // local variable for storing the minter reference
@@ -42,13 +47,17 @@ transaction(
              panic("Invalid collaborator data")
         }
 
-        let creatorData = Momentables.Creator(creatorName: creatorName, creatorAddress: creatorAddress, creatorRoyalty: creatorRoyalty);
+        let creatorAccount = getAccount(creatorAddress)
+        let creatorWallet = creatorAccount.getCapability<&FlowToken.Vault{FungibleToken.Receiver}>(/public/FlowTokenReciever)!
+        let creatorData = Momentables.Creator(creatorName: creatorName, creatorWallet: creatorWallet, creatorRoyalty: creatorRoyalty);
         
         let collaboratorsData:[ Momentables.Collaborator] = []
 
         var index = 0
         while index < collaboratorNames.length{
-            collaboratorsData.append(Momentables.Collaborator(collaboratorName: collaboratorNames[index], collaboratorAddress: collaboratorAddresses[index], collaboratorRoyalty: collaboratorRoyalties[index])) 
+            let collaboratorAccount = getAccount(collaboratorAddresses[index])
+            let collaboratorWallet = collaboratorAccount.getCapability<&FlowToken.Vault{FungibleToken.Receiver}>(/public/FlowTokenReciever)!
+            collaboratorsData.append(Momentables.Collaborator(collaboratorName: collaboratorNames[index], collaboratorAddress: collaboratorWallet, collaboratorRoyalty: collaboratorRoyalties[index])) 
             index = index+1
         }
 
@@ -59,8 +68,11 @@ transaction(
             name:name,
             description:description,
             imageCID:imageCID, 
+            directoryPath: directoryPath,
             traits: traits, 
             creator:creatorData , 
-            collaborators: collaboratorsData)
+            collaborators: collaboratorsData,
+            momentableCollectionDetails: momentableCollectionDetails
+            )
     }
 }
