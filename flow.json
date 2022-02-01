@@ -58,7 +58,8 @@
       "source": "./cadence/contracts/Momentables.cdc",
       "aliases": {
         "emulator": "0xf8d6e0586b0a20c7",
-        "testnet": "0x9f2eb43b6df02730"
+        "testnet": "0x9f2eb43b6df02730",
+        "mainnet": "<Address>"
       }
     }
   },
@@ -95,6 +96,10 @@
         "hashAlgorithm": "SHA3_256",
         "privateKey": "326b927ba2ad1fb01f0919cdfb703a971e2a956ffa3bb014dfc63ae596dc02fc"
       }
+    },
+    "mainnet-account": {
+      "address": "<Address>",
+      "keys": "${MAINNET_KEY}"
     }
   },
   "deployments": {
@@ -109,6 +114,9 @@
     },
     "testnet": {
       "testnet-account": ["Momentables"]
+    },
+    "mainnet": {
+      "mainnet-account": ["Momentables"]
     }
   }
 }
