@@ -84,7 +84,7 @@
         "index": 0,
         "signatureAlgorithm": "ECDSA_P256",
         "hashAlgorithm": "SHA3_256",
-        "privateKey": "708cdd179a8835cd2f55d50c6fa9caf3f81d34f62029316afc89f8514d8c2624"
+        "privateKey": "${TESTNET_ADMIN}"
       }
     },
     "testnet-account1": {
@@ -94,7 +94,7 @@
         "index": 0,
         "signatureAlgorithm": "ECDSA_P256",
         "hashAlgorithm": "SHA3_256",
-        "privateKey": "326b927ba2ad1fb01f0919cdfb703a971e2a956ffa3bb014dfc63ae596dc02fc"
+        "privateKey": "${TESTNET_ACCOUNT1}"
       }
     },
     "mainnet-account": {
